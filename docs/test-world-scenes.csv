@@ -1,0 +1,7 @@
+world_id,world_file,world_sha256,bedrock_version,seed,scene_id,biome,camera_x,camera_y,camera_z,yaw,pitch,time,weather,route_start,route_end,duration_seconds,input_method,reference_capture,notes
+,,,,,water-shore,,,,,,,,,,,,,,
+,,,,,water-motion,,,,,,,,,,,,,,
+,,,,,forest,,,,,,,,,,,,,,
+,,,,,lamps,,,,,,,,,,,,,,
+,,,,,sky,,,,,,,,,,,,,,
+,,,,,biome-route,,,,,,,,,,,,,,

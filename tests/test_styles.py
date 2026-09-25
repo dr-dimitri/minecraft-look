@@ -1,13 +1,11 @@
 import contextlib
 import io
 import json
-import shutil
 import sys
 import tempfile
 import unittest
 import zipfile
 from pathlib import Path
-from unittest.mock import patch
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 import build
@@ -58,17 +56,17 @@ class StyleTests(unittest.TestCase):
     def test_both_installers_contain_all_choices_and_balanced_covers_every_style(self):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d)
-            shutil.copytree(validate.PACK,root/'pack')
-            shutil.copytree(validate.ROOT/'reference',root/'reference')
-            shutil.copytree(validate.ROOT/'assets',root/'assets')
-            (root/'scripts').mkdir()
-            shutil.copy2(validate.ROOT/'scripts/create_pack.py',root/'scripts/create_pack.py')
-            with patch.object(validate,'ROOT',root),patch.object(validate,'PACK',root/'pack'),patch.object(build,'ROOT',root),patch.object(build,'PACK',root/'pack'),contextlib.redirect_stdout(io.StringIO()):
-                build.main()
+            from source_archive import source_entries
+            for name, data in source_entries(validate.ROOT, include_generated=False).items():
+                target = root / name.removeprefix('lumen-bedrock/')
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(data)
+            with contextlib.redirect_stdout(io.StringIO()):
+                output = build.main(root)
             version='.'.join(map(str,self.base['manifest.json']['header']['version']))
             pack_ids=[]
             for variant,count,sample_width in [('Quality',16,.055),('Balanced',8,.11)]:
-                with zipfile.ZipFile(root/'dist'/f'Lumen-WQHD-{variant}-{version}.mcpack') as z:
+                with zipfile.ZipFile(output/f'Lumen-WQHD-{variant}-{version}.mcpack') as z:
                     manifest=json.loads(z.read('manifest.json'))
                     pack_ids.append(manifest['header']['uuid'])
                     self.assertEqual(manifest['subpacks'],self.base['manifest.json']['subpacks'])

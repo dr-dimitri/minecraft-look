@@ -6,32 +6,50 @@ permissions:
   contents: read
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            python: '3.10'
+            release: false
+          - os: ubuntu-24.04
+            python: '3.14.7'
+            release: true
+          - os: windows-2022
+            python: '3.14.7'
+            release: false
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      - name: Check Python runtime
-        run: |
-          python3 -c 'import sys; assert sys.version_info >= (3, 10), "Python 3.10+ required"'
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Record Python runtime
+        run: python -c 'import sys, zlib; print(sys.version); print("zlib", zlib.ZLIB_RUNTIME_VERSION)'
       - name: Check Lumen WQHD version and release tag
         env:
           REF_TYPE: ${{ github.ref_type }}
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
           if [ "$REF_TYPE" = tag ]; then
-            python3 scripts/check_release.py --tag "$RELEASE_TAG"
+            python scripts/check_release.py --tag "$RELEASE_TAG"
           else
-            python3 scripts/check_release.py
+            python scripts/check_release.py
           fi
       - name: Recreate Lumen WQHD
-        run: python3 scripts/create_pack.py
+        run: python scripts/create_pack.py
       - name: Test Lumen Python code
-        run: python3 -m unittest discover -s tests -v
+        run: python -m unittest discover -s tests -v
       - name: Test build guards with Python optimization
-        run: python3 -O -m unittest discover -s tests -p test_build_guards.py -v
-      - name: Build Lumen WQHD
-        run: |
-          python3 scripts/build.py
-          python3 scripts/check_release.py
+        run: python -O -m unittest discover -s tests -p test_build_guards.py -v
+      - name: Verify repeat build and independent source rebuild
+        id: artifacts
+        run: python scripts/verify_build.py --github-output "$GITHUB_OUTPUT"
       - name: Reject generated drift, including untracked files
         run: |
           drift="$(git status --porcelain --untracked-files=all -- pack docs/biome-map.json)"
@@ -41,18 +59,15 @@ jobs:
             exit 1
           fi
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: matrix.release
         with:
           name: lumen-wqhd
-          path: |
-            dist/Lumen-WQHD-Quality-*.mcpack
-            dist/Lumen-WQHD-Balanced-*.mcpack
-            dist/Lumen-WQHD-Source-*.zip
-            dist/SHA256SUMS.txt
+          path: ${{ steps.artifacts.outputs.path }}/*
           if-no-files-found: error
   draft-release:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
       actions: read
@@ -61,7 +76,7 @@ jobs:
       - name: Validate exact tag before creating release
         env:
           RELEASE_TAG: ${{ github.ref_name }}
-        run: python3 scripts/check_release.py --tag "$RELEASE_TAG"
+        run: python scripts/check_release.py --tag "$RELEASE_TAG"
       - name: Download Lumen WQHD artifacts
         env:
           GH_TOKEN: ${{ github.token }}
@@ -71,27 +86,11 @@ jobs:
         env:
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          python3 - <<'PY'
-          import hashlib, os, re
-          from pathlib import Path
-          tag = os.environ['RELEASE_TAG']
-          version = tag.removeprefix('v')
-          expected = {f'Lumen-WQHD-{preset}-{version}.mcpack' for preset in ('Quality', 'Balanced')}
-          expected.add(f'Lumen-WQHD-Source-{version}.zip')
-          directory = Path('release-assets')
-          if {path.name for path in directory.iterdir()} != expected | {'SHA256SUMS.txt'}:
-              raise SystemExit('Unexpected or missing release assets')
-          checksums = {}
-          for line in (directory / 'SHA256SUMS.txt').read_text(encoding='utf-8').splitlines():
-              match = re.fullmatch(r'([0-9a-f]{64})  (.+)', line)
-              if match is None or match[2] not in expected or match[2] in checksums:
-                  raise SystemExit('Invalid checksum manifest')
-              checksums[match[2]] = match[1]
-          if set(checksums) != expected:
-              raise SystemExit('Incomplete checksum manifest')
-          for name, digest in checksums.items():
-              if hashlib.sha256((directory / name).read_bytes()).hexdigest() != digest:
-                  raise SystemExit('Checksum mismatch: ' + name)
+          python - <<'PY'
+          import os, sys
+          sys.path.insert(0, 'scripts')
+          from artifacts import verify_bundle
+          verify_bundle('release-assets', os.environ['RELEASE_TAG'].removeprefix('v'))
           PY
       - name: Create reviewable draft with verified artifacts
         env:

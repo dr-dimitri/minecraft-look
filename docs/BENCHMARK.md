@@ -2,6 +2,9 @@
 
 Ziel: ungefähr 80 echte gerenderte Bilder pro Sekunde bei WQHD, Bildqualität hat Vorrang. Das ist noch kein bestätigtes Ergebnis. 80 FPS entsprechen durchschnittlich 12,5 ms pro Bild; einzelne lange Frames bleiben dabei wichtig.
 
+Referenzwelt, Stationen und Aufnahmen nach [TEST_WORLD.md](TEST_WORLD.md)
+festhalten. Dieselbe exportierte Welt mit dokumentiertem SHA-256 verwenden.
+
 ## Vorbereitung
 
 Minecraft-Versionsnummer, Radeon-Treiberversion, CPU, Arbeitsspeicher, Monitor-Hz und Einstellungen notieren. 16 GB Grafikspeicher sind nicht gleichbedeutend mit 16 GB Arbeitsspeicher. Hintergrundaufnahmen für den Vergleich gleich einstellen. Zusätzliche Frame-Generation zunächst deaktivieren, damit der gemessene Wert die echte Renderleistung beschreibt.

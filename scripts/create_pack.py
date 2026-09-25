@@ -13,7 +13,7 @@ VERSION = [0, 4, 1]
 
 def write(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8', newline='\n')
 
 def settings(folder, name, key, values, version='1.21.80'):
     write(PACK / folder / f'{name}.json', {

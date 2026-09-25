@@ -21,7 +21,7 @@ class SourceArchiveTests(unittest.TestCase):
         return path
 
     def test_project_sources_and_skills_survive_without_git(self):
-        names = ['LICENSE', '.gitignore', 'README.md', 'scripts/build.py',
+        names = ['LICENSE', '.gitattributes', '.gitignore', 'README.md', 'scripts/build.py',
                  'tests/test_package.py', 'pack/manifest.json', 'reference/source.json',
                  'assets/night_sky/source.json', 'docs/benchmark.csv',
                  '.agents/skills/lumen-release/SKILL.md', '.github/workflows/build.yml']

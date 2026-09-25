@@ -57,7 +57,8 @@ dem Vergleich neue Ausgaben gezielt übernehmen.
 python3 scripts/create_pack.py
 python3 scripts/check_release.py
 python3 -m unittest discover -s tests -v
-python3 scripts/build.py
+python3 -O -m unittest discover -s tests -p test_build_guards.py -v
+python3 scripts/verify_build.py
 git status --porcelain --untracked-files=all -- pack docs/biome-map.json
 ```
 
@@ -66,31 +67,46 @@ noch nicht eingecheckte Änderung die erwarteten Diffs prüfen und gemeinsam mit
 den Quellen committen. Die CI verlangt einen unveränderten Checkout und erkennt
 auch neu erzeugte, nicht versionierte Dateien.
 
+`build.py` erzeugt und validiert Ressourcen in einer temporären Kopie der
+kuratierten Quellen. Lokale `pack/`-Dateien und die lokale Biomkarte werden
+weder überschrieben noch als Eingabe verwendet. Im Source-ZIP liegen die frisch
+erzeugten Ausgaben. `create_pack.py` bleibt für die in Git gepflegten Ausgaben
+zuständig; deshalb bleibt auch die Driftprüfung verpflichtend.
+
+`verify_build.py` führt zwei vollständige Builds sowie einen eigenständigen
+Build aus dem entpackten Source-ZIP durch. Alle drei Archive und die Prüfsummen
+müssen innerhalb derselben Python-/zlib-Umgebung bytegleich sein. Das Skript
+protokolliert beide Runtime-Versionen und läuft auch in jedem CI-Prüfjob.
+
+Ein erfolgreicher Build gibt den vollständigen Satzpfad unter
+`dist/<Version>/<SHA256-der-Prüfsummendatei>/` aus. `dist/current.json` wird erst
+nach Prüfung aller Archive atomar auf diesen Satz umgeschaltet. Leser müssen
+diesen Verweis einmal auflösen und danach denselben Satz verwenden, nicht den
+Verweis zwischen einzelnen Dateien erneut lesen. `artifacts.current_bundle()`
+löst ihn auf und prüft Vollständigkeit und Hashes. Frühere Sätze bleiben
+unverändert. Ein Abbruch beim Umschalten kann einen unreferenzierten vollständigen
+Satz hinterlassen; der vorherige Verweis bleibt gültig. Eine Garantie bei
+Stromausfall wird nicht behauptet.
+
 Vor einem Kandidaten zusätzlich:
 
-- Den vollständigen Build im selben sauberen Quellbestand und derselben
-  Python-/zlib-Umgebung wiederholen. SHA-256 jedes erzeugten Archivs zwischen
-  beiden Läufen vergleichen. Die bestehenden Archiv-Unittests allein belegen
-  keinen vollständigen Wiederholungsbuild. Der Workflow prüft die automatisierten
-  Gates; den vollständigen Wiederholungsbuild im Abnahmebeleg dokumentieren.
-- Jede Zeile von `dist/SHA256SUMS.txt` gegen die Datei prüfen (Linux: `sha256sum -c`,
-  macOS: `shasum -a 256 -c`, jeweils im betreffenden `dist/`). Keine fremden
-  Altversionen aus einem lokalen `dist/*` veröffentlichen.
-- Archive öffnen: Root-Manifest je `.mcpack`, CRC und Versions-/UUID-Zuordnung
-  beider Grafikvarianten prüfen. Source-ZIP-Inhalte auf
-  private/lokale Dateien kontrollieren; anschließend jedes Source-ZIP in einem
-  frischen Verzeichnis entpacken und den dokumentierten Produktbuild ausführen.
+- Den ausgegebenen Satzpfad verwenden, keine fremden Altversionen aus `dist/*`
+  veröffentlichen. Flache Ausgaben älterer Buildskripte werden nicht aktualisiert.
+- Root-Manifest, Versionen, UUIDs und Artefaktauswahl im Review prüfen.
   `scripts/source_archive.py` erlaubt nur deklarierte Projektverzeichnisse und
   Dateitypen. Lokale Umgebungen, versteckte Zusatzdateien, Logs und Caches werden
-  ausgeschlossen; Symlinks in den ausgewählten Quellen brechen den Build ab.
-  Neue benötigte Verzeichnisse/Dateitypen in der Auswahl samt Regressionstest
-  ergänzen. Der Filter ersetzt keine Inhaltsprüfung bewusst gepflegter Quellen.
+  ausgeschlossen; Symlinks und Lesefehler in ausgewählten Quellen brechen ab.
+  Neue benötigte Verzeichnisse/Dateitypen samt Regressionstest ergänzen. Der
+  Filter ersetzt keine Inhaltsprüfung bewusst gepflegter Quellen.
 
 ## CI und Release-Entwurf
 
 `.github/workflows/build.yml` prüft bei Push und Pull Request Versionen und
-generierte Ausgaben, baut Quality und Balanced und lädt ein CI-Artefakt mit
-beiden Installern, Source-ZIP und Prüfsummen hoch. Auf einem Release-Tag kommt die strikte Tag-/Changelogprüfung
+generierte Ausgaben auf Ubuntu 24.04 mit Python 3.10 und 3.14.7 sowie Windows
+2022 mit Python 3.14.7. Jeder Job prüft beide Installer, den Wiederholungsbuild
+und den Source-ZIP-Neubau. Nur der feste Linux-/Python-3.14.7-Job lädt den
+exakten geprüften Satz als CI-Artefakt hoch. Der Releasejob wartet auf den Erfolg
+aller drei Jobs. Windows-CI prüft Python und Dateiverarbeitung, nicht Minecraft. Auf einem Release-Tag kommt die strikte Tag-/Changelogprüfung
 hinzu. Erfolgreiche Tags erzeugen einen **Entwurf**, keine öffentliche Freigabe.
 Die Pakete werden aus dem geprüften CI-Lauf übernommen und nicht im Releasejob
 neu gebaut. Prüfsummen werden mitgeliefert und vor dem Entwurf geprüft.
@@ -123,6 +139,8 @@ Quellcommit, Dateinamen und SHA-256 der **tatsächlich getesteten** CI-Artefakte
 Belege als Releaseanhang/-text oder späteren Dokumentationscommit speichern;
 den Kandidatentag zum Ergänzen eines Belegs nicht verschieben oder neu bauen.
 
+- Referenzwelt und Szenen gemäß [TEST_WORLD.md](TEST_WORLD.md) festhalten;
+  Weltdatei samt SHA-256 und ausgefüllte Szenenvorlage am Beleg referenzieren.
 - WQHD: [VALIDATION.md](VALIDATION.md), [BENCHMARK.md](BENCHMARK.md) und
   [NIGHT_SKY.md](NIGHT_SKY.md) verwenden. Quality/Balanced jeweils einzeln,
   alle vier Stile und Rückwechsel, Wasser/Biomwechsel, Tag/Nacht/Wetter,

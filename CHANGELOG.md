@@ -2,6 +2,23 @@
 
 ## [Unreleased]
 
+- Builds erzeugen Ressourcen aus einer temporären Quellkopie neu, auch bei
+  unveränderter Version. Lokale generierte Dateien bleiben erhalten und werden
+  nicht als Paketquelle verwendet; das Source-ZIP enthält frische Ausgaben.
+- Vollständige, geprüfte Artefaktsätze unter `dist/<Version>/<Satz-SHA256>/`;
+  `dist/current.json` wird erst nach Erfolg atomar umgeschaltet. Abgebrochene
+  Builds mischen keine Dateien mit früheren Ausgaben. Frühere flache Dateien in
+  `dist/` bleiben Altbestand; den ausgegebenen Satzpfad verwenden.
+- Wiederholungsbuild und eigenständiger Source-ZIP-Neubau mit Hashvergleich als
+  lokaler Befehl und verpflichtender CI-Schritt; Linux mit Python 3.10/3.14.7
+  und Windows mit Python 3.14.7. Releaseartefakte stammen aus Linux/3.14.7;
+  der Releasejob wartet auf alle drei Prüfläufe.
+- Feste LF-Zeilenenden für Quellen und generiertes JSON verhindern veränderte
+  Referenzprüfsummen durch Windows-Checkouts.
+- Verfahren und Szenenvorlage für eine wiederholbare Bedrock-Abnahme mit
+  festgehaltener Welt, Kameras, Updatepfad, Aufnahmen, Logs und Messdaten.
+  Referenzwelt und tatsächliche Spielabnahme sind weiterhin offen.
+
 ## [0.4.1] - Testversion
 
 - Quellarchive enthalten nur ausgewählte Projektdateien; lokale `.env`-Dateien,

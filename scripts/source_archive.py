@@ -2,7 +2,7 @@
 import os
 from pathlib import Path
 
-ROOT_FILES = {'.gitignore', 'AGENTS.md', 'CHANGELOG.md', 'LICENSE', 'NOTICE.md', 'README.md'}
+ROOT_FILES = {'.gitattributes', '.gitignore', 'AGENTS.md', 'CHANGELOG.md', 'LICENSE', 'NOTICE.md', 'README.md'}
 SOURCE_DIRS = {
     '.agents': {'.md', '.yaml', '.yml'},
     '.github': {'.md', '.yaml', '.yml'},
@@ -16,7 +16,7 @@ SOURCE_DIRS = {
 LOCAL_DIRS = {'__pycache__', 'node_modules', 'dist', 'venv'}
 
 
-def source_entries(root):
+def source_entries(root, *, include_generated=True):
     """Work in both a checkout and an extracted source ZIP; Git is not required.
 
     Only declared project folders/file types belong in a distribution. This is
@@ -35,10 +35,17 @@ def source_entries(root):
     for name in sorted(ROOT_FILES):
         include(root / name)
     for folder, suffixes in SOURCE_DIRS.items():
+        if folder == 'pack' and not include_generated:
+            continue
         directory = root / folder
         if directory.is_symlink():
             raise ValueError(f'Source archive must not follow symlinks: {directory}')
-        for current, directories, filenames in os.walk(directory, followlinks=False):
+        if not directory.exists():
+            continue
+        def fail(error):
+            raise error
+
+        for current, directories, filenames in os.walk(directory, followlinks=False, onerror=fail):
             directories[:] = sorted(name for name in directories
                                     if not name.startswith('.') and name not in LOCAL_DIRS)
             for name in directories:
@@ -46,6 +53,8 @@ def source_entries(root):
                 if path.is_symlink():
                     raise ValueError(f'Source archive must not follow symlinks: {path}')
             for name in sorted(filenames):
+                if not include_generated and Path(current) / name == root / 'docs/biome-map.json':
+                    continue
                 if not name.startswith('.') and Path(name).suffix in suffixes:
                     include(Path(current) / name)
     return entries

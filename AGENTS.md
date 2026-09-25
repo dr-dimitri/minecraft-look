@@ -14,6 +14,12 @@
   einer vollständigen temporären Kopie vergleichen; ein Git-Export enthält keine
   unversionierten Dateien. Keine Nutzerarbeit durch Regeneration verwerfen.
 - `dist/` bleibt Buildausgabe und wird nicht eingecheckt.
+  `build.py` regeneriert und validiert eine temporäre Quellkopie. Lokale
+  `pack/`-Dateien und die Biomkarte bleiben unberührt und werden nicht als
+  Paketquelle übernommen. Für Git weiterhin bewusst `create_pack.py` ausführen.
+  Nur vollständige Sätze unter `dist/<Version>/<Satz-SHA256>/` verwenden;
+  `dist/current.json` zeigt auf den zuletzt erfolgreichen Satz. Keine flachen
+  Altdateien oder pauschalen `dist/*`-Globs veröffentlichen.
   `scripts/source_archive.py` begrenzt Source-ZIPs auf Projektverzeichnisse und
   unterstützte Dateitypen. Neue Quelltypen dort samt Test ergänzen.
   Releasebuilds nur aus einem geprüften,
@@ -57,7 +63,13 @@ Veröffentlichung. Bereits erteilte Autorisierung gilt weiter.
    Befunde beheben und betroffene Prüfungen wiederholen. Selbstreview ausdrücklich
    als solchen benennen, wenn kein unabhängiger Reviewer beteiligt war.
 4. Tests, vollständigen Build, Wiederholungsbuild und Wiederaufbau aus dem
-   Quellarchiv ausführen. Ergebnisse und verbleibende Grenzen dokumentieren.
+   Quellarchiv ausführen (`python3 scripts/verify_build.py`). Alle drei Archive
+   müssen innerhalb derselben Python-/zlib-Umgebung bytegleich sein. Die CI
+   prüft Linux mit minimaler und fester Release-Python-Version sowie Windows;
+   ein Release benötigt alle Prüfläufe. Ergebnisse und Grenzen dokumentieren.
+   Für die reale Abnahme `docs/TEST_WORLD.md` und die Szenenvorlage verwenden:
+   exportierte Welt samt SHA-256, Kameras/Routen und Belege aller Varianten/Stile
+   festhalten. Eine vorbereitete Vorlage ist keine erstellte oder geprüfte Welt.
 5. Bei beauftragtem Commit/Push die zusammengehörigen Änderungen committen und
    pushen; anschließend die CI des exakten Commits abwarten und Fehler beheben.
 6. Bei beauftragtem Release den geprüften Commit taggen, CI-Artefakte übernehmen,

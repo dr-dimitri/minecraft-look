@@ -6,7 +6,7 @@ Ein Grafikpaket für Minecraft Bedrock unter Windows mit vier auswählbaren Stil
 
 ## Installieren
 
-1. `Lumen-WQHD-Quality-0.4.1.mcpack` aus `dist/` beziehungsweise einem GitHub-Release herunterladen. „Source code.zip“ bei GitHub ist der Quellcode, nicht das Installationspaket.
+1. `Lumen-WQHD-Quality-0.4.1.mcpack` aus dem vom Build ausgegebenen Artefaktverzeichnis beziehungsweise einem GitHub-Release herunterladen. „Source code.zip“ bei GitHub ist der Quellcode, nicht das Installationspaket.
 2. Unter Windows die `.mcpack` doppelklicken. Falls nötig „Öffnen mit → Minecraft für Windows“ wählen und den erfolgreichen Import abwarten.
 3. In der gewünschten Welt unter **Ressourcenpakete → Meine Pakete** Lumen WQHD aktivieren. Zum ersten Test nur dieses zusätzliche Grafikpaket verwenden.
 4. Im Hauptmenü unter **Einstellungen → Video → Grafikmodus** **Vibrant Visuals** auswählen. Ein Ressourcenpaket schaltet den Grafikmodus nicht selbst um.
@@ -101,15 +101,15 @@ python -m unittest discover -s tests -v
 python scripts/build.py
 ```
 
-Der Build bricht bei veralteten Manifestversionen und unvollständigen Materialien ab. Das Quellarchiv enthält nur die in `scripts/source_archive.py` deklarierten Projektdateien; lokale Umgebungen und versteckte Zusatzdateien werden ausgeschlossen.
+Der Build erzeugt Ressourcen in einer temporären Kopie frisch aus den Quellen und prüft sie vor dem Verpacken. Auch Änderungen bei gleicher Versionsnummer werden übernommen; lokale Bearbeitungen in `pack/` und `docs/biome-map.json` bleiben erhalten und werden nicht eingepackt. Für mitzuversionierende Ausgaben weiterhin `create_pack.py` ausführen. Das Quellarchiv enthält nur die in `scripts/source_archive.py` deklarierten Projektdateien; lokale Umgebungen und versteckte Zusatzdateien werden ausgeschlossen.
 
-Unter Windows kann bei Bedarf `py -3` statt `python` verwendet werden. Das Ergebnis liegt in `dist/`: zwei `.mcpack`, ein Quellcode-ZIP und SHA-256-Prüfsummen. Die Archive enthalten `manifest.json` direkt auf oberster Ebene.
+Unter Windows kann bei Bedarf `py -3` statt `python` verwendet werden. Das Ergebnis liegt als vollständiger Satz unter `dist/<Version>/<Satz-SHA256>/`: zwei `.mcpack`, ein Quellcode-ZIP und SHA-256-Prüfsummen. Der Build gibt den Pfad aus; `dist/current.json` verweist auf den zuletzt erfolgreichen Satz. Alte Ausgaben bleiben erhalten. Dateien direkt unter `dist/` aus früheren Builds werden nicht mehr aktualisiert und dürfen nicht pauschal hochgeladen werden. Die Archive enthalten `manifest.json` direkt auf oberster Ebene.
 
 Die Basiswerte werden in `scripts/create_pack.py`, die Wasserprofile in `scripts/water_profiles.py`, die Himmelsbeleuchtung in `scripts/night_sky.py` und die Stile in `scripts/themes.py` gepflegt; `pack/` und `docs/biome-map.json` sind daraus erzeugte Dateien. Die Himmelstexturen sind unter `assets/night_sky/` enthalten und werden beim normalen Build nur kopiert. Nur die optionale erneute Umrechnung der Panoramagrafik mit `scripts/convert_sky.py` benötigt FFmpeg. UUIDs bei normalen Updates beibehalten und die Version in `scripts/create_pack.py` erhöhen. Änderungen direkt in `pack/` würden beim Erzeugen überschrieben.
 
-Dieses Projekt wird als [minecraft-look](https://github.com/dr-dimitri/minecraft-look) gepflegt. Der Workflow prüft und baut auf Push/Pull Request beide Grafikvarianten. Ein passender Tag (`vX.Y.Z`) erzeugt nach erfolgreichen Prüfungen einen GitHub-Release-Entwurf mit den passenden Artefakten. Die öffentliche Freigabe folgt erst nach der dokumentierten Abnahme. Automatische Tests erzeugen keine Minecraft-Leistungsmessungen.
+Dieses Projekt wird als [minecraft-look](https://github.com/dr-dimitri/minecraft-look) gepflegt. Der Workflow prüft auf Linux (Python 3.10 und 3.14.7) und Windows (Python 3.14.7). `python scripts/verify_build.py` führt auch lokal einen vollständigen Wiederholungsbuild und einen eigenständigen Neubau aus dem Source-ZIP aus und vergleicht alle drei Archive bytegenau. Dies gilt innerhalb derselben Python-/zlib-Umgebung, nicht als Garantie identischer Kompression zwischen Plattformen. Ein passender Tag (`vX.Y.Z`) erzeugt nach erfolgreichen Prüfungen einen GitHub-Release-Entwurf mit den passenden Artefakten. Die öffentliche Freigabe folgt erst nach der dokumentierten Abnahme. Automatische Tests erzeugen keine Minecraft-Leistungsmessungen.
 
-Projektvorgaben stehen in [AGENTS.md](AGENTS.md), der vollständige Ablauf in [docs/RELEASING.md](docs/RELEASING.md). Die projektlokalen Skills `lumen-pack-development` und `lumen-release` liegen unter `.agents/skills/`. Änderungen werden in [CHANGELOG.md](CHANGELOG.md) gepflegt. Für die Freigabe gibt es eine [Abnahmevorlage](docs/releases/TEMPLATE.md).
+Projektvorgaben stehen in [AGENTS.md](AGENTS.md), der vollständige Ablauf in [docs/RELEASING.md](docs/RELEASING.md). Die projektlokalen Skills `lumen-pack-development` und `lumen-release` liegen unter `.agents/skills/`. Änderungen werden in [CHANGELOG.md](CHANGELOG.md) gepflegt. Für die Freigabe gibt es eine [Abnahmevorlage](docs/releases/TEMPLATE.md) und das [Verfahren für eine feste Testwelt](docs/TEST_WORLD.md).
 
 ## Quellen und Prüfung
 
