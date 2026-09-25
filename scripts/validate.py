@@ -169,10 +169,20 @@ def validate_data(files, style):
     require(set(water)=={f'water/{name}.json' for name in PROFILES},'Missing or unexpected water profile')
     require(all(v['caustics']==effects[0]['caustics'] and v['waves']['enabled']==effects[0]['waves']['enabled'] for v in effects),'Non-blendable water settings differ')
     require(len({v['minecraft:lighting_settings']['directional_lights']['orbital']['orbital_offset_degrees'] for n,v in files.items() if n.startswith('lighting/')}) == 1,'Orbital offsets differ')
-    for p in (PACK/'textures'/'blocks').glob('*.texture_set.json'):
+    blocks = {'iron_block', 'gold_block', 'copper_block', 'diamond_block'}
+    material_paths = {f'textures/blocks/{block}.texture_set.json' for block in blocks}
+    require({name for name in files if name.startswith('textures/blocks/')
+             and name.endswith('.texture_set.json')} == material_paths,
+            'Missing or unexpected block material definitions')
+    for name in sorted(material_paths):
+        p = PACK / name
         texture=load(p)['minecraft:texture_set']
+        require(texture['color'] == p.name.removesuffix('.texture_set.json'),
+                f'Unexpected block color reference: {p.name}')
         png=p.parent/(texture['color']+'.png')
         data=png.read_bytes()
+        require(data == (ROOT/'reference'/'resource_pack'/'textures'/'blocks'/png.name).read_bytes(),
+                f'Block color texture differs from pinned reference: {png.name}')
         require(data[:8]==b'\x89PNG\r\n\x1a\n', 'Invalid PNG')
         width,height,depth,kind=struct.unpack('>IIBB', data[16:26])
         require(width==height and depth==8 and kind in (2,6), 'Invalid RGB/RGBA color texture')

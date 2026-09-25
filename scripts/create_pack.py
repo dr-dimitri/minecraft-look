@@ -9,7 +9,7 @@ import night_sky
 ROOT = Path(__file__).resolve().parents[1]
 PACK = ROOT / 'pack'
 REF = ROOT / 'reference' / 'resource_pack'
-VERSION = [0, 4, 0]
+VERSION = [0, 4, 1]
 
 def write(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -32,7 +32,7 @@ def main():
         'format_version': 2,
         'header': {
             'name': 'Lumen WQHD · Quality',
-            'description': 'Galaxienhimmel bei Nacht · Vier Stile am Zahnrad · WQHD / RX 9060 XT · 80 FPS ungemessen · v0.4.0',
+            'description': 'Galaxienhimmel bei Nacht · Vier Stile am Zahnrad · WQHD / RX 9060 XT · 80 FPS ungemessen · v' + '.'.join(map(str, VERSION)),
             'uuid': '62534bcd-5dc1-47bf-9903-5277eeb54f6a',
             'version': VERSION,
             'min_engine_version': [1, 26, 50],

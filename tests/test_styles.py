@@ -61,6 +61,8 @@ class StyleTests(unittest.TestCase):
             shutil.copytree(validate.PACK,root/'pack')
             shutil.copytree(validate.ROOT/'reference',root/'reference')
             shutil.copytree(validate.ROOT/'assets',root/'assets')
+            (root/'scripts').mkdir()
+            shutil.copy2(validate.ROOT/'scripts/create_pack.py',root/'scripts/create_pack.py')
             with patch.object(validate,'ROOT',root),patch.object(validate,'PACK',root/'pack'),patch.object(build,'ROOT',root),patch.object(build,'PACK',root/'pack'),contextlib.redirect_stdout(io.StringIO()):
                 build.main()
             version='.'.join(map(str,self.base['manifest.json']['header']['version']))

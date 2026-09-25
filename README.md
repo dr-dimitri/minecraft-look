@@ -2,11 +2,11 @@
 
 Ein Grafikpaket für Minecraft Bedrock unter Windows mit vier auswählbaren Stilen: **Natürlich, Geheimnisvoll, Herbst und Halloween**. Acht Gewässerprofile, Tageslicht in realistischen Lux-Größenordnungen und filmische Helligkeitsdarstellung bilden die Grundlage. Für den möglichst natürlichen Look **Quality + Natürlich** wählen. Quality ist die vorgesehene erste Wahl für die RX 9060 XT mit 16 GB Grafikspeicher bei 2560 × 1440.
 
-**Version 0.4.0 ist eine technisch geprüfte Testversion.** Rund 80 FPS sind das Entwicklungsziel, kein Messergebnis. Hier stand weder Minecraft für Windows noch die Zielgrafikkarte für eine Sicht- oder Leistungsprüfung zur Verfügung. Bildwirkung, Import, Stilauswahl und Leistung müssen deshalb noch im Spiel geprüft werden. Die neue Abstimmung zielt auf mehr Realismus; fotorealistische Ergebnisse sind noch nicht visuell bestätigt. Es gibt keine automatische GPU-Erkennung oder automatische FPS-Regelung.
+**Version 0.4.1 ist eine technisch geprüfte Testversion.** Rund 80 FPS sind das Entwicklungsziel, kein Messergebnis. Hier stand weder Minecraft für Windows noch die Zielgrafikkarte für eine Sicht- oder Leistungsprüfung zur Verfügung. Bildwirkung, Import, Stilauswahl und Leistung müssen deshalb noch im Spiel geprüft werden. Die neue Abstimmung zielt auf mehr Realismus; fotorealistische Ergebnisse sind noch nicht visuell bestätigt. Es gibt keine automatische GPU-Erkennung oder automatische FPS-Regelung.
 
 ## Installieren
 
-1. `Lumen-WQHD-Quality-0.4.0.mcpack` aus `dist/` beziehungsweise einem GitHub-Release herunterladen. „Source code.zip“ bei GitHub ist der Quellcode, nicht das Installationspaket.
+1. `Lumen-WQHD-Quality-0.4.1.mcpack` aus `dist/` beziehungsweise einem GitHub-Release herunterladen. „Source code.zip“ bei GitHub ist der Quellcode, nicht das Installationspaket.
 2. Unter Windows die `.mcpack` doppelklicken. Falls nötig „Öffnen mit → Minecraft für Windows“ wählen und den erfolgreichen Import abwarten.
 3. In der gewünschten Welt unter **Ressourcenpakete → Meine Pakete** Lumen WQHD aktivieren. Zum ersten Test nur dieses zusätzliche Grafikpaket verwenden.
 4. Im Hauptmenü unter **Einstellungen → Video → Grafikmodus** **Vibrant Visuals** auswählen. Ein Ressourcenpaket schaltet den Grafikmodus nicht selbst um.
@@ -34,7 +34,7 @@ Herbst färbt Laub, das seine Farbe vom Biom erhält. Blätter mit fester Textur
 
 Die Auswahl hat bewusst keine Hardware-Sperren: Alle Stile verwenden dieselbe Wellenqualität und dieselbe Speicherstufe. „Natürlich“ steht als Standard am Ende der Manifestliste. Ein Stilwechsel ersetzt die vollständigen betroffenen Ressourcen, einschließlich der Biomfarben, damit zum Beispiel Herbstfarben beim Zurückwechseln nicht im Paket bestehen bleiben. Weitere Stile lassen sich in `scripts/themes.py` ergänzen.
 
-Bei einem Update bleiben die Paket-UUIDs erhalten. Version 0.4.0 wird deshalb als neuere Version desselben Quality- beziehungsweise Balanced-Pakets importiert. Danach die aktive Variante und den gewählten Stil kontrollieren.
+Bei einem Update bleiben die Paket-UUIDs erhalten. Version 0.4.1 wird deshalb als neuere Version desselben Quality- beziehungsweise Balanced-Pakets importiert. Danach die aktive Variante und den gewählten Stil kontrollieren.
 
 ## Galaxienhimmel in Version 0.4.0
 
@@ -101,11 +101,13 @@ python -m unittest discover -s tests -v
 python scripts/build.py
 ```
 
+Der Build bricht bei veralteten Manifestversionen und unvollständigen Materialien ab. Das Quellarchiv enthält nur die in `scripts/source_archive.py` deklarierten Projektdateien; lokale Umgebungen und versteckte Zusatzdateien werden ausgeschlossen.
+
 Unter Windows kann bei Bedarf `py -3` statt `python` verwendet werden. Das Ergebnis liegt in `dist/`: zwei `.mcpack`, ein Quellcode-ZIP und SHA-256-Prüfsummen. Die Archive enthalten `manifest.json` direkt auf oberster Ebene.
 
 Die Basiswerte werden in `scripts/create_pack.py`, die Wasserprofile in `scripts/water_profiles.py`, die Himmelsbeleuchtung in `scripts/night_sky.py` und die Stile in `scripts/themes.py` gepflegt; `pack/` und `docs/biome-map.json` sind daraus erzeugte Dateien. Die Himmelstexturen sind unter `assets/night_sky/` enthalten und werden beim normalen Build nur kopiert. Nur die optionale erneute Umrechnung der Panoramagrafik mit `scripts/convert_sky.py` benötigt FFmpeg. UUIDs bei normalen Updates beibehalten und die Version in `scripts/create_pack.py` erhöhen. Änderungen direkt in `pack/` würden beim Erzeugen überschrieben.
 
-Dieses Projekt wird als [minecraft-look](https://github.com/dr-dimitri/minecraft-look) gepflegt. Der Workflow prüft und baut auf Push/Pull Request beide Grafikvarianten. Ein passender Tag (`vX.Y.Z`) erzeugt nach erfolgreichen Prüfungen einen GitHub-Release-Entwurf mit den passenden Artefakten. Die öffentliche Freigabe folgt erst nach der dokumentierten Abnahme. Der neue Workflow wurde noch nicht auf GitHub ausgeführt; seine Tests erzeugen keine Minecraft-Leistungsmessungen.
+Dieses Projekt wird als [minecraft-look](https://github.com/dr-dimitri/minecraft-look) gepflegt. Der Workflow prüft und baut auf Push/Pull Request beide Grafikvarianten. Ein passender Tag (`vX.Y.Z`) erzeugt nach erfolgreichen Prüfungen einen GitHub-Release-Entwurf mit den passenden Artefakten. Die öffentliche Freigabe folgt erst nach der dokumentierten Abnahme. Automatische Tests erzeugen keine Minecraft-Leistungsmessungen.
 
 Projektvorgaben stehen in [AGENTS.md](AGENTS.md), der vollständige Ablauf in [docs/RELEASING.md](docs/RELEASING.md). Die projektlokalen Skills `lumen-pack-development` und `lumen-release` liegen unter `.agents/skills/`. Änderungen werden in [CHANGELOG.md](CHANGELOG.md) gepflegt. Für die Freigabe gibt es eine [Abnahmevorlage](docs/releases/TEMPLATE.md).
 

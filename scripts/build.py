@@ -3,8 +3,10 @@ import hashlib
 import json
 import zipfile
 from pathlib import Path
-from validate import validate, ROOT, PACK
+from validate import validate, require, ROOT, PACK
 from water_profiles import QUALITY, BALANCED
+from check_release import read_manifest, source_version
+from source_archive import source_entries
 
 def archive(path, entries):
     with zipfile.ZipFile(path,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as z:
@@ -19,6 +21,9 @@ def archive(path, entries):
 
 def main():
     validate()
+    read_manifest(PACK/'manifest.json', source_version(ROOT/'scripts/create_pack.py'))
+    # Inspect source inputs before writing any artifacts, including symlink checks.
+    source = source_entries(ROOT)
     dist=ROOT/'dist'
     dist.mkdir(exist_ok=True)
     base={p.relative_to(PACK).as_posix():p.read_bytes() for p in PACK.rglob('*') if p.is_file()}
@@ -41,16 +46,12 @@ def main():
         target=dist/f'Lumen-WQHD-{preset}-{version_text}.mcpack'
         archive(target,files)
         with zipfile.ZipFile(target) as z:
-            assert 'manifest.json' in z.namelist() and not any(n.startswith('pack/') for n in z.namelist())
+            require('manifest.json' in z.namelist() and not any(n.startswith('pack/') for n in z.namelist()),
+                    'Installer must contain its manifest at the archive root')
             expected=QUALITY if preset=='Quality' else BALANCED
-            assert all(all(json.loads(z.read(n))['minecraft:water_settings']['waves'][key]==value for key,value in expected.items()) for n in z.namelist() if Path(n).parent.name == 'water' and n.endswith('.json'))
+            require(all(all(json.loads(z.read(n))['minecraft:water_settings']['waves'][key]==value for key,value in expected.items()) for n in z.namelist() if Path(n).parent.name == 'water' and n.endswith('.json')),
+                    f'Unexpected wave budget in {preset} installer')
         outputs.append(target)
-    source={}
-    for p in ROOT.rglob('*'):
-        rel=p.relative_to(ROOT)
-        if not p.is_file() or any(x in ('dist','.git','__pycache__') for x in rel.parts):
-            continue
-        source['lumen-bedrock/'+rel.as_posix()]=p.read_bytes()
     target=dist/f'Lumen-WQHD-Source-{version_text}.zip'
     archive(target,source)
     outputs.append(target)

@@ -26,6 +26,8 @@ jobs:
         run: python3 scripts/create_pack.py
       - name: Test Lumen Python code
         run: python3 -m unittest discover -s tests -v
+      - name: Test build guards with Python optimization
+        run: python3 -O -m unittest discover -s tests -p test_build_guards.py -v
       - name: Build Lumen WQHD
         run: |
           python3 scripts/build.py

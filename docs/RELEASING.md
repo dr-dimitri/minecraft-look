@@ -80,8 +80,11 @@ Vor einem Kandidaten zusätzlich:
   beider Grafikvarianten prüfen. Source-ZIP-Inhalte auf
   private/lokale Dateien kontrollieren; anschließend jedes Source-ZIP in einem
   frischen Verzeichnis entpacken und den dokumentierten Produktbuild ausführen.
-  Die Source-Packer berücksichtigen `.gitignore` nicht. Deshalb nur aus einem
-  sauberen, geprüften Quellbestand bauen.
+  `scripts/source_archive.py` erlaubt nur deklarierte Projektverzeichnisse und
+  Dateitypen. Lokale Umgebungen, versteckte Zusatzdateien, Logs und Caches werden
+  ausgeschlossen; Symlinks in den ausgewählten Quellen brechen den Build ab.
+  Neue benötigte Verzeichnisse/Dateitypen in der Auswahl samt Regressionstest
+  ergänzen. Der Filter ersetzt keine Inhaltsprüfung bewusst gepflegter Quellen.
 
 ## CI und Release-Entwurf
 
@@ -95,7 +98,7 @@ neu gebaut. Prüfsummen werden mitgeliefert und vor dem Entwurf geprüft.
 Beispiel für die lokale Tagprüfung (Version an den Kandidaten anpassen):
 
 ```sh
-python3 scripts/check_release.py --tag v0.4.0
+python3 scripts/check_release.py --tag v0.4.1
 ```
 
 Vor dem Tag das Review und die grüne CI des vorgesehenen Commits prüfen. Ein

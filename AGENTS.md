@@ -14,7 +14,9 @@
   einer vollständigen temporären Kopie vergleichen; ein Git-Export enthält keine
   unversionierten Dateien. Keine Nutzerarbeit durch Regeneration verwerfen.
 - `dist/` bleibt Buildausgabe und wird nicht eingecheckt.
-  Die Source-ZIPs sammeln Dateien rekursiv: Releasebuilds nur aus einem geprüften,
+  `scripts/source_archive.py` begrenzt Source-ZIPs auf Projektverzeichnisse und
+  unterstützte Dateitypen. Neue Quelltypen dort samt Test ergänzen.
+  Releasebuilds nur aus einem geprüften,
   sauberen Checkout ohne private Dateien, virtuelle Umgebungen oder lokale Logs.
 
 ## Änderungen und Prüfung
@@ -43,6 +45,30 @@ Versionierung, Tags, Abnahme, Veröffentlichung und Hotfixes richten sich nach
 Neue Arbeitsbranches verwenden `codex/` als Präfix. Externe Aktionen nur im
 Umfang des Nutzerauftrags ausführen; eine Releasevorbereitung ist keine
 Veröffentlichung. Bereits erteilte Autorisierung gilt weiter.
+
+## Ablauf einer beauftragten Bugfix- und Releaserunde
+
+1. Praxisrelevante Fehler anhand konkreter Auslöser suchen und reproduzieren;
+   belegte Befunde von Vermutungen oder offenen Sichtprüfungen trennen.
+2. Die Ursachen in den Quellen beheben und passende Regressionstests ergänzen.
+   Version, generierte Ausgaben, Anleitung und Changelog konsistent aktualisieren.
+3. Danach einen getrennten Reviewdurchgang über den vollständigen Diff machen:
+   Nutzerverhalten, Regressionen, Paket-/Updatepfad, Dateiauswahl und CI prüfen.
+   Befunde beheben und betroffene Prüfungen wiederholen. Selbstreview ausdrücklich
+   als solchen benennen, wenn kein unabhängiger Reviewer beteiligt war.
+4. Tests, vollständigen Build, Wiederholungsbuild und Wiederaufbau aus dem
+   Quellarchiv ausführen. Ergebnisse und verbleibende Grenzen dokumentieren.
+5. Bei beauftragtem Commit/Push die zusammengehörigen Änderungen committen und
+   pushen; anschließend die CI des exakten Commits abwarten und Fehler beheben.
+6. Bei beauftragtem Release den geprüften Commit taggen, CI-Artefakte übernehmen,
+   Releasehinweise ergänzen und veröffentlichen. Ohne tatsächliche Bedrock-Abnahme
+   nur als ausdrücklich gekennzeichnete Testversion/Pre-release veröffentlichen;
+   keine stabile Engine- oder Leistungsfreigabe behaupten. Danach die
+   veröffentlichten Dateien herunterladen und ihre SHA-256-Werte kontrollieren.
+
+Der Auftrag für diese gesamte Runde autorisiert Commit, Push und Release;
+keine erneute Bestätigung für bereits beauftragte Schritte verlangen. Ein
+reiner Prüf- oder Änderungsauftrag löst keine Veröffentlichung aus.
 
 Projektlokale Skills unter `.agents/skills/`:
 

@@ -2,12 +2,12 @@
   "format_version": 2,
   "header": {
     "name": "Lumen WQHD · Quality",
-    "description": "Galaxienhimmel bei Nacht · Vier Stile am Zahnrad · WQHD / RX 9060 XT · 80 FPS ungemessen · v0.4.0",
+    "description": "Galaxienhimmel bei Nacht · Vier Stile am Zahnrad · WQHD / RX 9060 XT · 80 FPS ungemessen · v0.4.1",
     "uuid": "62534bcd-5dc1-47bf-9903-5277eeb54f6a",
     "version": [
       0,
       4,
-      0
+      1
     ],
     "min_engine_version": [
       1,
@@ -22,7 +22,7 @@
       "version": [
         0,
         4,
-        0
+        1
       ]
     }
   ],
