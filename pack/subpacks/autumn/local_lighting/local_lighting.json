@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.120",
+  "minecraft:local_light_settings": {
+    "minecraft:torch": {
+      "light_color": "#FFD0A0",
+      "light_type": "point_light"
+    },
+    "minecraft:lantern": {
+      "light_color": "#FFD0A0",
+      "light_type": "point_light"
+    },
+    "minecraft:soul_torch": {
+      "light_color": "#9BD7E4",
+      "light_type": "point_light"
+    },
+    "minecraft:soul_lantern": {
+      "light_color": "#9BD7E4",
+      "light_type": "point_light"
+    }
+  }
+}

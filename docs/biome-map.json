@@ -1,0 +1,417 @@
+{
+  "bamboo_jungle": {
+    "climate": "wet",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "bamboo_jungle_hills": {
+    "climate": "wet",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "beach": {
+    "climate": "temperate",
+    "water": "coastal",
+    "sky": "galaxy"
+  },
+  "birch_forest": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "birch_forest_hills": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "birch_forest_hills_mutated": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "birch_forest_mutated": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "cherry_grove": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "cold_beach": {
+    "climate": "cold",
+    "water": "cold_ocean",
+    "sky": "galaxy"
+  },
+  "cold_ocean": {
+    "climate": "cold",
+    "water": "cold_ocean",
+    "sky": "galaxy"
+  },
+  "cold_taiga": {
+    "climate": "cold",
+    "water": "clear_lake",
+    "sky": "galaxy"
+  },
+  "cold_taiga_hills": {
+    "climate": "cold",
+    "water": "clear_lake",
+    "sky": "galaxy"
+  },
+  "cold_taiga_mutated": {
+    "climate": "cold",
+    "water": "clear_lake",
+    "sky": "galaxy"
+  },
+  "dappled_forest": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "deep_cold_ocean": {
+    "climate": "cold",
+    "water": "cold_ocean",
+    "sky": "galaxy"
+  },
+  "deep_dark": {
+    "climate": "vanilla",
+    "water": "vanilla",
+    "sky": "galaxy"
+  },
+  "deep_frozen_ocean": {
+    "climate": "cold",
+    "water": "cold_ocean",
+    "sky": "galaxy"
+  },
+  "deep_lukewarm_ocean": {
+    "climate": "temperate",
+    "water": "ocean",
+    "sky": "galaxy"
+  },
+  "deep_ocean": {
+    "climate": "temperate",
+    "water": "ocean",
+    "sky": "galaxy"
+  },
+  "deep_warm_ocean": {
+    "climate": "temperate",
+    "water": "tropical",
+    "sky": "galaxy"
+  },
+  "desert": {
+    "climate": "warm",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "desert_hills": {
+    "climate": "warm",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "desert_mutated": {
+    "climate": "warm",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "dripstone_caves": {
+    "climate": "vanilla",
+    "water": "vanilla",
+    "sky": "galaxy"
+  },
+  "extreme_hills": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "extreme_hills_edge": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "extreme_hills_mutated": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "extreme_hills_plus_trees": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "extreme_hills_plus_trees_mutated": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "flower_forest": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "forest": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "forest_hills": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "frozen_ocean": {
+    "climate": "cold",
+    "water": "cold_ocean",
+    "sky": "galaxy"
+  },
+  "frozen_peaks": {
+    "climate": "cold",
+    "water": "clear_lake",
+    "sky": "galaxy"
+  },
+  "frozen_river": {
+    "climate": "cold",
+    "water": "clear_lake",
+    "sky": "galaxy"
+  },
+  "grove": {
+    "climate": "cold",
+    "water": "clear_lake",
+    "sky": "galaxy"
+  },
+  "ice_mountains": {
+    "climate": "cold",
+    "water": "clear_lake",
+    "sky": "galaxy"
+  },
+  "ice_plains": {
+    "climate": "cold",
+    "water": "clear_lake",
+    "sky": "galaxy"
+  },
+  "ice_plains_spikes": {
+    "climate": "cold",
+    "water": "clear_lake",
+    "sky": "galaxy"
+  },
+  "jagged_peaks": {
+    "climate": "cold",
+    "water": "clear_lake",
+    "sky": "galaxy"
+  },
+  "jungle": {
+    "climate": "wet",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "jungle_edge": {
+    "climate": "wet",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "jungle_edge_mutated": {
+    "climate": "wet",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "jungle_hills": {
+    "climate": "wet",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "jungle_mutated": {
+    "climate": "wet",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "legacy_frozen_ocean": {
+    "climate": "cold",
+    "water": "cold_ocean",
+    "sky": "galaxy"
+  },
+  "lukewarm_ocean": {
+    "climate": "temperate",
+    "water": "ocean",
+    "sky": "galaxy"
+  },
+  "lush_caves": {
+    "climate": "vanilla",
+    "water": "vanilla",
+    "sky": "galaxy"
+  },
+  "mangrove_swamp": {
+    "climate": "wet",
+    "water": "swamp",
+    "sky": "galaxy"
+  },
+  "meadow": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "mega_taiga": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "mega_taiga_hills": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "mesa": {
+    "climate": "warm",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "mesa_bryce": {
+    "climate": "warm",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "mesa_plateau": {
+    "climate": "warm",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "mesa_plateau_mutated": {
+    "climate": "warm",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "mesa_plateau_stone": {
+    "climate": "warm",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "mesa_plateau_stone_mutated": {
+    "climate": "warm",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "mushroom_island": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "mushroom_island_shore": {
+    "climate": "temperate",
+    "water": "coastal",
+    "sky": "galaxy"
+  },
+  "ocean": {
+    "climate": "temperate",
+    "water": "ocean",
+    "sky": "galaxy"
+  },
+  "pale_garden": {
+    "climate": "vanilla",
+    "water": "vanilla",
+    "sky": "galaxy"
+  },
+  "plains": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "redwood_taiga_hills_mutated": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "redwood_taiga_mutated": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "river": {
+    "climate": "temperate",
+    "water": "river",
+    "sky": "galaxy"
+  },
+  "roofed_forest": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "roofed_forest_mutated": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "savanna": {
+    "climate": "warm",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "savanna_mutated": {
+    "climate": "warm",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "savanna_plateau": {
+    "climate": "warm",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "savanna_plateau_mutated": {
+    "climate": "warm",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "snowy_slopes": {
+    "climate": "cold",
+    "water": "clear_lake",
+    "sky": "galaxy"
+  },
+  "stone_beach": {
+    "climate": "temperate",
+    "water": "coastal",
+    "sky": "galaxy"
+  },
+  "stony_peaks": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "sulfur_caves": {
+    "climate": "vanilla",
+    "water": "vanilla",
+    "sky": "galaxy"
+  },
+  "sunflower_plains": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "swampland": {
+    "climate": "wet",
+    "water": "swamp",
+    "sky": "galaxy"
+  },
+  "swampland_mutated": {
+    "climate": "wet",
+    "water": "swamp",
+    "sky": "galaxy"
+  },
+  "taiga": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "taiga_hills": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "taiga_mutated": {
+    "climate": "temperate",
+    "water": "lake",
+    "sky": "galaxy"
+  },
+  "warm_ocean": {
+    "climate": "temperate",
+    "water": "tropical",
+    "sky": "galaxy"
+  }
+}

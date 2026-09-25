@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lumen-Release"
+  short_description: "Grafikversionen, Artefakte und Releasefreigabe prüfen"
+  default_prompt: "Nutze $lumen-release, um einen geprüften Releasekandidaten mit Releasehinweisen und offenen Abnahmepunkten vorzubereiten."

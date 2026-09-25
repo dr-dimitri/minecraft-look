@@ -1,0 +1,16 @@
+{
+  "generator": "Built-in image_gen; original image, no Oblivion assets",
+  "source": "source-v2.png",
+  "conversion": "FFmpeg v360 equirectangular to cubemap; frblud, 000000",
+  "face_size": 1024,
+  "sha256": {
+    "cubemap_0.png": "d98940980c80e189b71b196c7babec3bc794377f2993ee7353a6d10b24d910a4",
+    "cubemap_1.png": "edc7563b8dd0baa24918be3248e2988b7e998da24f41b7e0c04f876e96e1c39c",
+    "cubemap_2.png": "f2d909178031e409c8bd1b117da1cfdb980986e1f32e519c9396061408666209",
+    "cubemap_3.png": "a3850ec6b632f841c320e257d6317334d41dbff4817b5159f4c35dea935b7dc6",
+    "cubemap_4.png": "e678c3316420df6fb9345faa046637fdeb4cf5ea85413174e2c16b1f9d632e8c",
+    "cubemap_5.png": "38e38a0a610cd72d29c59a6186d15a67725728fb5d78df96dda304a7b1a94943",
+    "source-v2.png": "e5595e9ecdff333b72b0c8a56bfe19a36c692830e0070129bf2b2c565c9890c2",
+    "source.png": "a22a3fc9c7503d0b4ecdf026e2f9162f359a48c95b8815ed828ff84d6c632ff0"
+  }
+}

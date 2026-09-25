@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lumen-Grafikpakete"
+  short_description: "Grafikquellen ändern und beide Paketvarianten prüfen"
+  default_prompt: "Nutze $lumen-pack-development, um die gewünschte Grafikänderung umzusetzen und beide Varianten zu prüfen."

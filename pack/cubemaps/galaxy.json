@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.130",
+  "minecraft:cubemap_settings": {
+    "description": {
+      "identifier": "lumen:galaxy"
+    },
+    "lighting": {
+      "ambient_light_illuminance": {
+        "0": 0,
+        "0.25": 0,
+        "0.30": 0,
+        "0.34": 0.02,
+        "0.40": 0.55,
+        "0.45": 0.8,
+        "0.58": 0.8,
+        "0.64": 0.4,
+        "0.69": 0.03,
+        "0.73": 0,
+        "1": 0
+      },
+      "sky_light_contribution": 0,
+      "directional_light_contribution": 0,
+      "affected_by_atmospheric_scattering": true,
+      "affected_by_volumetric_scattering": true
+    }
+  }
+}
