@@ -2,11 +2,11 @@
 
 Ein Grafikpaket für Minecraft Bedrock unter Windows mit vier auswählbaren Stilen: **Natürlich, Geheimnisvoll, Herbst und Halloween**. Acht Gewässerprofile, Tageslicht in realistischen Lux-Größenordnungen und filmische Helligkeitsdarstellung bilden die Grundlage. Für den möglichst natürlichen Look **Quality + Natürlich** wählen. Quality ist die vorgesehene erste Wahl für die RX 9060 XT mit 16 GB Grafikspeicher bei 2560 × 1440.
 
-**Version 0.4.1 ist eine technisch geprüfte Testversion.** Rund 80 FPS sind das Entwicklungsziel, kein Messergebnis. Hier stand weder Minecraft für Windows noch die Zielgrafikkarte für eine Sicht- oder Leistungsprüfung zur Verfügung. Bildwirkung, Import, Stilauswahl und Leistung müssen deshalb noch im Spiel geprüft werden. Die neue Abstimmung zielt auf mehr Realismus; fotorealistische Ergebnisse sind noch nicht visuell bestätigt. Es gibt keine automatische GPU-Erkennung oder automatische FPS-Regelung.
+**Version 0.4.2 ist eine technisch geprüfte Testversion.** Rund 80 FPS sind das Entwicklungsziel, kein Messergebnis. Hier stand weder Minecraft für Windows noch die Zielgrafikkarte für eine Sicht- oder Leistungsprüfung zur Verfügung. Bildwirkung, Import, Stilauswahl und Leistung müssen deshalb noch im Spiel geprüft werden. Die neue Abstimmung zielt auf mehr Realismus; fotorealistische Ergebnisse sind noch nicht visuell bestätigt. Es gibt keine automatische GPU-Erkennung oder automatische FPS-Regelung.
 
 ## Installieren
 
-1. `Lumen-WQHD-Quality-0.4.1.mcpack` aus dem vom Build ausgegebenen Artefaktverzeichnis beziehungsweise einem GitHub-Release herunterladen. „Source code.zip“ bei GitHub ist der Quellcode, nicht das Installationspaket.
+1. `Lumen-WQHD-Quality-0.4.2.mcpack` aus dem vom Build ausgegebenen Artefaktverzeichnis beziehungsweise einem GitHub-Release herunterladen. „Source code.zip“ bei GitHub ist der Quellcode, nicht das Installationspaket.
 2. Unter Windows die `.mcpack` doppelklicken. Falls nötig „Öffnen mit → Minecraft für Windows“ wählen und den erfolgreichen Import abwarten.
 3. In der gewünschten Welt unter **Ressourcenpakete → Meine Pakete** Lumen WQHD aktivieren. Zum ersten Test nur dieses zusätzliche Grafikpaket verwenden.
 4. Im Hauptmenü unter **Einstellungen → Video → Grafikmodus** **Vibrant Visuals** auswählen. Ein Ressourcenpaket schaltet den Grafikmodus nicht selbst um.
@@ -32,9 +32,11 @@ Die Auswahl verwendet Bedrocks eingebaute Unterpakete (Subpacks). Die genaue Men
 
 Herbst färbt Laub, das seine Farbe vom Biom erhält. Blätter mit fester Texturfarbe können ihre ursprüngliche Farbe behalten; es ist kein Austausch sämtlicher Baumtexturen. Nachtlicht bleibt in den Einstellungen bei allen Stilen vorhanden; die tatsächliche Sichtbarkeit muss im Spiel geprüft werden. Die Auswahl verändert keine Spielregeln, Wetterabläufe oder Kreaturen und wechselt nicht automatisch mit dem Kalender.
 
+Version 0.4.2 senkt die gemeinsame Bildhelligkeit in allen vier Stilen: Farbkorrektur-Gain 0,65 statt 1,0, bei „Natürlich“ zusätzlich neutraler Kontrast. Quality und Balanced übernehmen dieselbe Korrektur; die Stilfarben bleiben erhalten. Die genaue Helligkeit und Lesbarkeit bei Tag und Nacht müssen noch in Bedrock verglichen werden.
+
 Die Auswahl hat bewusst keine Hardware-Sperren: Alle Stile verwenden dieselbe Wellenqualität und dieselbe Speicherstufe. „Natürlich“ steht als Standard am Ende der Manifestliste. Ein Stilwechsel ersetzt die vollständigen betroffenen Ressourcen, einschließlich der Biomfarben, damit zum Beispiel Herbstfarben beim Zurückwechseln nicht im Paket bestehen bleiben. Weitere Stile lassen sich in `scripts/themes.py` ergänzen.
 
-Bei einem Update bleiben die Paket-UUIDs erhalten. Version 0.4.1 wird deshalb als neuere Version desselben Quality- beziehungsweise Balanced-Pakets importiert. Danach die aktive Variante und den gewählten Stil kontrollieren.
+Bei einem Update bleiben die Paket-UUIDs erhalten. Version 0.4.2 ist als Update von 0.4.1 für dasselbe Quality- beziehungsweise Balanced-Paket vorgesehen; der Importpfad muss noch in Bedrock geprüft werden. Danach die aktive Variante und den gewählten Stil kontrollieren.
 
 ## Galaxienhimmel in Version 0.4.0
 

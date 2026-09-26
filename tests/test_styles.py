@@ -73,6 +73,14 @@ class StyleTests(unittest.TestCase):
                     for face in range(6):
                         name=f'textures/environment/overworld_cubemap/cubemap_{face}.png'
                         self.assertEqual(z.read(name),(validate.PACK/name).read_bytes())
+                    grading=[n for n in z.namelist() if Path(n).parent.name=='color_grading' and n.endswith('.json')]
+                    expected_grading={n for n in self.files if Path(n).parent.name=='color_grading'}
+                    self.assertEqual(len(grading),5)
+                    self.assertEqual(set(grading),expected_grading)
+                    for name in grading:
+                        # Both installers are regenerated from the sources and
+                        # must retain the brightness correction in every style.
+                        self.assertEqual(json.loads(z.read(name)),self.files[name])
                     water=[n for n in z.namelist() if Path(n).parent.name=='water' and n.endswith('.json')]
                     self.assertEqual(len(water),40)
                     for name in water:

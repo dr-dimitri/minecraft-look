@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.4.2] - Testversion
+
+- Überhelle Darstellung: gemeinsamer Farbkorrektur-Gain von 1,0 auf 0,65
+  reduziert und Zusatzkontrast im natürlichen Stil entfernt. Alle vier Stile
+  übernehmen die Helligkeitskorrektur in Quality und Balanced; ihre Farbtönung
+  bleibt erhalten. Die tatsächliche Bildhelligkeit bleibt im Spiel zu prüfen.
 - Ungültige Balanced-Wellenbudgets (z. B. `octaves = 0`, nicht endliche Werte
   oder zusätzliche optische Parameter) brechen den Build ab, bevor ein neuer
   Artefaktsatz bereitgestellt wird. Alle 40 Wasserdateien bleiben abgedeckt.
@@ -30,6 +36,12 @@
 - Verfahren und Szenenvorlage für eine wiederholbare Bedrock-Abnahme mit
   festgehaltener Welt, Kameras, Updatepfad, Aufnahmen, Logs und Messdaten.
   Referenzwelt und tatsächliche Spielabnahme sind weiterhin offen.
+- Abgeschlossene Arbeitsbranches nach Review und grüner CI in den Standardbranch
+  mergen und anschließend lokal sowie auf dem Remote löschen.
+
+Windows-Import, Update von 0.4.1, tatsächliche Helligkeit aller Stile und
+Leistungsmessungen bleiben offen. Deshalb Veröffentlichung als Pre-release;
+Paket-UUIDs und technische Mindestversion bleiben erhalten.
 
 ## [0.4.1] - Testversion
 

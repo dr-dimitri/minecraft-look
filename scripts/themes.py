@@ -77,7 +77,9 @@ def transform(relative, original, style):
         grading = value['minecraft:color_grading_settings']['color_grading']['midtones']
         grading['contrast'] = [p['contrast']]*3
         grading['saturation'] = [p['saturation']]*3
-        grading['gain'] = p['gain']
+        # Palette gains are relative tints, preserving the shared brightness
+        # correction when switching away from the natural style.
+        grading['gain'] = [round(base*tint,5) for base,tint in zip(grading['gain'],p['gain'])]
     # All themes share the same water optics. Lighting creates the mood without
     # adding an artificial algae/CDOM filter to clear lakes and tropical water.
     elif folder == 'local_lighting':
