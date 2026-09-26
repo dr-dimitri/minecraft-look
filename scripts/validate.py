@@ -5,6 +5,9 @@ import math
 import struct
 from pathlib import Path
 from pack_identity import check_pack_identity
+from brightness_lock import check_approved_brightness
+import halloween_fog
+import leaf_motion
 from themes import STYLES, AUTUMN_BIOMES
 from water_profiles import PROFILES
 from night_sky import SKY_ONLY_BIOMES, EXCLUDED_BIOMES, TEXTURES, FACE_SIZE
@@ -78,7 +81,8 @@ def validate():
     for style,_ in STYLES:
         prefix=f'subpacks/{style}/'
         overlay={n[len(prefix):]:v for n,v in all_files.items() if n.startswith(prefix)}
-        require(set(overlay)==expected_paths, f'Incomplete or unexpected style resources: {style}')
+        extras = halloween_fog.JSON_PATHS if style == 'halloween' else set()
+        require(set(overlay)==expected_paths | extras, f'Incomplete or unexpected style resources: {style}')
         if style == 'natural':
             require(overlay == {n:files[n] for n in expected_paths}, 'Natural style must restore base settings')
         validate_data({**files, **overlay},style)
@@ -193,7 +197,8 @@ def validate_data(files, style):
         for x in texture['metalness_emissive_roughness_subsurface']:
             numeric(x,0,255,'MERS')
     for ref in files['textures/textures_list.json']:
-        require((PACK/(ref+'.png')).is_file(),f'Missing texture: {ref}')
+        require((PACK/(ref+'.png')).is_file() or
+                (PACK/'subpacks'/style/(ref+'.png')).is_file(), f'Missing texture: {ref}')
     require(set(TEXTURES).issubset(files['textures/textures_list.json']),'Sky faces not registered')
     local=files['local_lighting/local_lighting.json']['minecraft:local_light_settings']
     require(set(local)=={'minecraft:torch','minecraft:lantern','minecraft:soul_torch','minecraft:soul_lantern'},'Unexpected added lights')
@@ -201,6 +206,9 @@ def validate_data(files, style):
         require(entry['light_type']=='point_light','Unexpected light type')
         require(isinstance(entry['light_color'],str) and len(entry['light_color'])==7 and entry['light_color'].startswith('#'),'Invalid local color')
         int(entry['light_color'][1:],16)
+    halloween_fog.validate_resources(files, style, ROOT, PACK)
+    leaf_motion.validate_resources(files, ROOT, PACK)
+    check_approved_brightness(files, style, ROOT)
 
 if __name__ == '__main__':
     validate()

@@ -6,7 +6,7 @@
 (Quality und Balanced). Beide Varianten werden gemeinsam versioniert.
 
 - Grafikquellen: `scripts/create_pack.py`, `themes.py`, `water_profiles.py`,
-  `night_sky.py`, die festgehaltenen Referenzen unter `reference/` und
+  `night_sky.py`, `halloween_fog.py`, `leaf_motion.py`, die festgehaltenen Referenzen unter `reference/` und
   `assets/night_sky/`. `pack/` und `docs/biome-map.json` sind generierte,
   mitzuversionierende Ausgaben. Änderungen an der Quelle vornehmen und neu erzeugen.
 - Die Generatoren löschen ihre Ausgabeordner. Vorher `git status` und vorhandene
@@ -29,6 +29,15 @@
 
 - Bestehende Paket- und Modul-UUIDs bei Updates erhalten. Quality und Balanced
   haben absichtlich eigene Identitäten.
+- Die am 26.09.2026 vom Nutzer bestätigte Helligkeit aus 0.4.3 ist festgeschrieben
+  in `reference/approved_brightness.json`. Licht, Farbkorrektur, Atmosphäre,
+  Cubemap, lokale Lichtquellen, Materialien und Biomzuordnungen nicht nebenbei
+  verändern. Der Validator prüft diesen Stand in Basis und allen Stilen.
+  Wasserbewegung darf unabhängig davon angepasst werden. Die danach ausdrücklich
+  gewünschte Wasserabdunklung ist als eigene Ausnahme mit Herkunft vermerkt.
+  Baseline niemals automatisch neu erzeugen oder zur Reparatur eines roten Tests
+  nachziehen; Änderungen benötigen einen ausdrücklichen Nutzerauftrag und Review.
+  Neue Effekte dürfen diese Schutzprüfung nicht abschalten.
 - Änderungen an Referenzen benötigen nachvollziehbare Herkunft samt Commit,
   Prüfsummen und Rechtehinweisen. Prüfsummen nicht zur Umgehung eines Fehlers ändern.
 - Normaler Build: Python ab 3.10. Keine

@@ -34,7 +34,7 @@ class BuildGuardTests(unittest.TestCase):
 
     def test_changed_sources_at_same_version_are_built_without_overwriting_local_outputs(self):
         source = self.root / 'scripts/water_profiles.py'
-        source.write_text(source.read_text().replace('(.080, .015, .035', '(.081, .015, .035')
+        source.write_text(source.read_text().replace('.100, .50, .55, 1.10', '.100, .50, .56, 1.10')
                           .replace("BALANCED = {'octaves': 8", "BALANCED = {'octaves': 7"))
         stale = self.root / 'pack/water/lake.json'
         before = stale.read_bytes()
@@ -47,7 +47,7 @@ class BuildGuardTests(unittest.TestCase):
         import zipfile
         with zipfile.ZipFile(next(output.glob('*Quality*.mcpack'))) as archive:
             water = json.loads(archive.read('water/lake.json'))['minecraft:water_settings']
-            self.assertEqual(water['particle_concentrations']['cdom'], .081)
+            self.assertEqual(water['waves']['speed'], .56)
             self.assertNotIn('local-notes.md', archive.namelist())
         with zipfile.ZipFile(next(output.glob('*Balanced*.mcpack'))) as archive:
             water = json.loads(archive.read('water/lake.json'))['minecraft:water_settings']
@@ -56,7 +56,7 @@ class BuildGuardTests(unittest.TestCase):
             self.assertNotIn('lumen-bedrock/pack/local-notes.md', archive.namelist())
             self.assertIn('plains', json.loads(archive.read('lumen-bedrock/docs/biome-map.json')))
             water = json.loads(archive.read('lumen-bedrock/pack/water/lake.json'))['minecraft:water_settings']
-            self.assertEqual(water['particle_concentrations']['cdom'], .081)
+            self.assertEqual(water['waves']['speed'], .56)
         self.assertEqual(stale.read_bytes(), before)
         self.assertEqual(marker.read_text(), 'Local user work')
         self.assertEqual(biome_map.read_text(), 'Local map notes')
@@ -67,6 +67,22 @@ class BuildGuardTests(unittest.TestCase):
         output = build.main()
         self.assertEqual(len(list(output.iterdir())), 4)
         self.assertFalse((self.root / 'pack').exists())
+
+    def test_valid_but_unapproved_brightness_change_cannot_replace_bundle(self):
+        import subprocess
+        output = build.main()
+        pointer = (self.root / 'dist/current.json').read_bytes()
+        baseline = (self.root / 'reference/approved_brightness.json').read_bytes()
+        source = self.root / 'scripts/themes.py'
+        original = source.read_text()
+        changed = original.replace("'sun_strength': .82", "'sun_strength': .81")
+        self.assertNotEqual(original, changed)
+        source.write_text(changed)
+        with self.assertRaises(subprocess.CalledProcessError):
+            build.main()
+        self.assertEqual((self.root / 'dist/current.json').read_bytes(), pointer)
+        self.assertEqual(current_bundle(self.root / 'dist'), output)
+        self.assertEqual((self.root / 'reference/approved_brightness.json').read_bytes(), baseline)
 
     def test_archive_failure_keeps_previous_bundle_and_pointer(self):
         output = build.main()

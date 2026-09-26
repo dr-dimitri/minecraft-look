@@ -9,7 +9,7 @@ SOURCE_DIRS = {
     'assets': {'.png', '.json', '.md'},
     'docs': {'.md', '.json', '.csv', '.svg', '.png'},
     'pack': {'.json', '.png', '.md'},
-    'reference': {'.json', '.png', '.md'},
+    'reference': {'.json', '.png', '.tga', '.md'},
     'scripts': {'.py'},
     'tests': {'.py'},
 }

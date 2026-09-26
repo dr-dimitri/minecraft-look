@@ -5,11 +5,13 @@ from pathlib import Path
 from themes import STYLES, generate
 import water_profiles
 import night_sky
+import halloween_fog
+import leaf_motion
 
 ROOT = Path(__file__).resolve().parents[1]
 PACK = ROOT / 'pack'
 REF = ROOT / 'reference' / 'resource_pack'
-VERSION = [0, 4, 3]
+VERSION = [0, 5, 0]
 
 def write(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -139,9 +141,12 @@ def main():
         })
         texture_names.append(f'textures/blocks/{block}')
     texture_names.extend(night_sky.copy_textures(ROOT, PACK))
+    texture_names.extend(leaf_motion.generate(ROOT, PACK, write))
     write(PACK / 'textures' / 'textures_list.json', texture_names)
     shutil.copyfile(ROOT / 'NOTICE.md', PACK / 'NOTICE.md')
     generate(PACK, write)
+    halloween_fog.generate(ROOT, PACK, write,
+                           {name for name, info in mapping.items() if info['climate'] != 'vanilla'})
     print(f'Generated pack: {len(mapping)} Overworld sky bindings, 78 full visual biomes, {len(water_profiles.PROFILES)} water profiles, 4 styles.')
 
 if __name__ == '__main__':

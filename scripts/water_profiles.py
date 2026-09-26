@@ -7,15 +7,20 @@ from copy import deepcopy
 
 # CDOM, chlorophyll, sediment, wave depth, base frequency, speed, crest shape.
 PROFILES = {
-    'lake':        (.080, .015, .035, .120, .36, .32, 1.18),
-    'clear_lake':  (.035, .008, .015, .065, .40, .26, 1.12),
-    'river':       (.350, .070, .350, .095, .56, .72, 1.22),
-    'coastal':     (.075, .035, .150, .200, .32, .50, 1.28),
-    'ocean':       (.035, .025, .025, .340, .19, .56, 1.35),
-    'cold_ocean':  (.025, .020, .025, .300, .21, .48, 1.30),
-    'tropical':   (.008, .007, .015, .200, .26, .50, 1.25),
-    'swamp':      (1.600, .450, 1.200, .045, .45, .19, 1.10),
+    'lake':        (.080, .015, .035, .100, .50, .55, 1.10),
+    'clear_lake':  (.035, .008, .015, .075, .55, .45, 1.06),
+    'river':       (.350, .070, .350, .080, .65, .70, 1.12),
+    'coastal':     (.075, .035, .150, .140, .40, .60, 1.12),
+    'ocean':       (.035, .025, .025, .180, .30, .65, 1.14),
+    'cold_ocean':  (.025, .020, .025, .160, .32, .55, 1.12),
+    'tropical':   (.008, .007, .015, .130, .40, .58, 1.10),
+    'swamp':      (1.600, .450, 1.200, .045, .48, .30, 1.04),
 }
+
+# Requested approximation of 10% darker water, not a screen-luminance scale.
+# Increase absorbing constituents modestly; leave sediment/scattering alone.
+# The actual attenuation depends on wavelength, depth and illumination.
+ABSORPTION_SCALE = 1.10
 
 # All biomes must share these non-blendable parameters. Use the engine's
 # built-in 64-frame animation; moderate power avoids an exaggerated pool look.
@@ -28,15 +33,19 @@ def settings(name):
     cdom, chlorophyll, sediment, depth, frequency, speed, shape = PROFILES[name]
     return {
         'particle_concentrations': {
-            'cdom': cdom, 'chlorophyll': chlorophyll, 'suspended_sediment': sediment,
+            'cdom': round(cdom * ABSORPTION_SCALE, 6),
+            'chlorophyll': round(chlorophyll * ABSORPTION_SCALE, 6),
+            'suspended_sediment': sediment,
         },
         'waves': {
             'enabled': True, 'depth': depth,
             # An irrational turn avoids the repeated five-heading pattern of 72°.
             'direction_increment': 137.507764,
-            'frequency': frequency, 'frequency_scaling': 1.22,
-            'mix': .20, **QUALITY, 'pull': .22, 'shape': shape,
-            'speed': speed, 'speed_scaling': 1.025,
+            # Shallow, nearly sinusoidal ripples; fine octaves stay close in
+            # frequency and speed instead of forming sharp, fast small crests.
+            'frequency': frequency, 'frequency_scaling': 1.16,
+            'mix': .20, **QUALITY, 'pull': .10, 'shape': shape,
+            'speed': speed, 'speed_scaling': 1.01,
         },
         'caustics': deepcopy(CAUSTICS),
         'biome_water_color_contribution': 0.0,

@@ -5,23 +5,23 @@
       "identifier": "lumen:cold_ocean"
     },
     "particle_concentrations": {
-      "cdom": 0.025,
-      "chlorophyll": 0.02,
+      "cdom": 0.0275,
+      "chlorophyll": 0.022,
       "suspended_sediment": 0.025
     },
     "waves": {
       "enabled": true,
-      "depth": 0.3,
+      "depth": 0.16,
       "direction_increment": 137.507764,
-      "frequency": 0.21,
-      "frequency_scaling": 1.22,
+      "frequency": 0.32,
+      "frequency_scaling": 1.16,
       "mix": 0.2,
       "octaves": 16,
       "sampleWidth": 0.055,
-      "pull": 0.22,
-      "shape": 1.3,
-      "speed": 0.48,
-      "speed_scaling": 1.025
+      "pull": 0.1,
+      "shape": 1.12,
+      "speed": 0.55,
+      "speed_scaling": 1.01
     },
     "caustics": {
       "enabled": true,
