@@ -29,7 +29,7 @@ class PackageTest(unittest.TestCase):
         for name,value in self.files.items():
             if name.startswith('lighting/'):
                 lights=value['minecraft:lighting_settings']['directional_lights']['orbital']
-                self.assertGreater(lights['moon']['illuminance']['0.5'],0)
+                self.assertGreater(max(lights['moon']['illuminance'].values()),0)
                 self.assertEqual(lights['sun']['illuminance']['0'],lights['sun']['illuminance']['1'])
 
     def test_unresolved_references_fail_before_packaging(self):

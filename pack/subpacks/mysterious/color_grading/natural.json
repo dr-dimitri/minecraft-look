@@ -7,14 +7,14 @@
     "color_grading": {
       "midtones": {
         "contrast": [
-          1.035,
-          1.035,
-          1.035
+          1.15,
+          1.15,
+          1.15
         ],
         "gain": [
-          0.64025,
-          0.65,
-          0.65975
+          0.97044,
+          0.98522,
+          1.0
         ],
         "gamma": [
           2.2,
@@ -22,19 +22,24 @@
           2.2
         ],
         "offset": [
-          0,
-          0,
-          0
+          0.0,
+          0.0,
+          0.0
         ],
         "saturation": [
-          0.94,
-          0.94,
-          0.94
+          0.987,
+          0.987,
+          0.987
         ]
+      },
+      "temperature": {
+        "enabled": true,
+        "temperature": 6500,
+        "type": "color_temperature"
       }
     },
     "tone_mapping": {
-      "operator": "aces"
+      "operator": "generic"
     }
   }
 }

@@ -2,7 +2,7 @@
   "format_version": "1.21.90",
   "minecraft:color_grading_settings": {
     "description": {
-      "identifier": "lumen:natural"
+      "identifier": "minecraft:default_color_grading"
     },
     "color_grading": {
       "midtones": {
@@ -13,8 +13,8 @@
         ],
         "gain": [
           1.0,
-          0.98522,
-          0.97537
+          1.0,
+          1.0
         ],
         "gamma": [
           2.2,
@@ -27,9 +27,9 @@
           0.0
         ],
         "saturation": [
-          1.06575,
-          1.06575,
-          1.06575
+          1.05,
+          1.05,
+          1.05
         ]
       },
       "temperature": {

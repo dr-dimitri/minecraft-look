@@ -98,6 +98,18 @@
     "resource_pack/textures/blocks/copper_block.png": "f2a4e847dbf7ffee41cda7a1695661e637fc11e53b0d7a28d7cdee76fb41981d",
     "resource_pack/textures/blocks/diamond_block.png": "d0fe64ca6fa0dd6d68a3693cd942454725082b928ca27fed9551dd658fa23eeb",
     "resource_pack/water/water.json": "089d6889e527acd443663925cd7a8ca98d0f9f806bdffe118bf30dfdfb29e8bf",
-    "resource_pack/atmospherics/atmospherics.json": "cb720057e9484bd87c0a04ff561aab35f60992eb146541ff092d9416947ae43c"
-  }
+    "resource_pack/atmospherics/atmospherics.json": "cb720057e9484bd87c0a04ff561aab35f60992eb146541ff092d9416947ae43c",
+    "resource_pack/color_grading/color_grading.json": "dbe56c22457054713334978c25a694d61ff446b557aaf78456f418184e2b0d5c",
+    "resource_pack/lighting/global.json": "5bd0e7a740f11bd92104dd959e366ce92fbb81af630e2468eeae4d0fb1b53efc"
+  },
+  "supplemental_retrievals": [
+    {
+      "retrieved": "2026-09-26",
+      "commit": "46ba6ea985fb5a92d79a9419198f10dda14c199d",
+      "files": [
+        "resource_pack/lighting/global.json",
+        "resource_pack/color_grading/color_grading.json"
+      ]
+    }
+  ]
 }
