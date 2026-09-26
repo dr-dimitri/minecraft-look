@@ -2,11 +2,11 @@
 
 Ein Grafikpaket für Minecraft Bedrock unter Windows mit vier auswählbaren Stilen: **Natürlich, Geheimnisvoll, Herbst und Halloween**. Acht Gewässerprofile, Tageslicht auf Basis von Mojangs Standardprofil und dessen Helligkeitsdarstellung bilden die Grundlage. Für den möglichst natürlichen Look **Quality + Natürlich** wählen. Quality ist die vorgesehene erste Wahl für die RX 9060 XT mit 16 GB Grafikspeicher bei 2560 × 1440.
 
-**Version 0.5.0 ist eine technisch geprüfte Testversion.** Rund 80 FPS sind das Entwicklungsziel, kein Messergebnis. Hier stand weder Minecraft für Windows noch die Zielgrafikkarte für eine Sicht- oder Leistungsprüfung zur Verfügung. Bildwirkung, Import, Stilauswahl und Leistung müssen deshalb noch im Spiel geprüft werden. Die neue Abstimmung zielt auf mehr Realismus; fotorealistische Ergebnisse sind noch nicht visuell bestätigt. Es gibt keine automatische GPU-Erkennung oder automatische FPS-Regelung.
+**Version 0.5.1 ist eine Testversion.** Rund 80 FPS sind das Entwicklungsziel, kein Messergebnis. Hier stand weder Minecraft für Windows noch die Zielgrafikkarte für eine Sicht- oder Leistungsprüfung zur Verfügung. Bildwirkung, Import, Stilauswahl und Leistung müssen deshalb noch im Spiel geprüft werden. Die neue Abstimmung zielt auf mehr Realismus; fotorealistische Ergebnisse sind noch nicht visuell bestätigt. Es gibt keine automatische GPU-Erkennung oder automatische FPS-Regelung.
 
 ## Installieren
 
-1. `Lumen-WQHD-Quality-0.5.0.mcpack` aus dem vom Build ausgegebenen Artefaktverzeichnis beziehungsweise einem GitHub-Release herunterladen. „Source code.zip“ bei GitHub ist der Quellcode, nicht das Installationspaket.
+1. `Lumen-WQHD-Quality-0.5.1.mcpack` aus dem vom Build ausgegebenen Artefaktverzeichnis beziehungsweise einem GitHub-Release herunterladen. „Source code.zip“ bei GitHub ist der Quellcode, nicht das Installationspaket.
 2. Unter Windows die `.mcpack` doppelklicken. Falls nötig „Öffnen mit → Minecraft für Windows“ wählen und den erfolgreichen Import abwarten.
 3. In der gewünschten Welt unter **Ressourcenpakete → Meine Pakete** Lumen WQHD aktivieren. Zum ersten Test nur dieses zusätzliche Grafikpaket verwenden.
 4. Im Hauptmenü unter **Einstellungen → Video → Grafikmodus** **Vibrant Visuals** auswählen. Ein Ressourcenpaket schaltet den Grafikmodus nicht selbst um.
@@ -36,7 +36,7 @@ Version 0.4.3 verwendet Mojangs festgehaltenes Standardprofil als Helligkeitsgru
 
 Die Auswahl hat bewusst keine Hardware-Sperren: Alle Stile verwenden dieselbe Wellenqualität und dieselbe Speicherstufe. „Natürlich“ steht als Standard am Ende der Manifestliste. Ein Stilwechsel ersetzt die vollständigen betroffenen Ressourcen, einschließlich der Biomfarben, damit zum Beispiel Herbstfarben beim Zurückwechseln nicht im Paket bestehen bleiben. Weitere Stile lassen sich in `scripts/themes.py` ergänzen.
 
-Bei einem Update bleiben die Paket-UUIDs erhalten. Version 0.5.0 ist als Update von 0.4.3 für dasselbe Quality- beziehungsweise Balanced-Paket vorgesehen; der Importpfad muss noch in Bedrock geprüft werden. Danach die aktive Variante und den gewählten Stil kontrollieren.
+Bei einem Update bleiben die Paket-UUIDs erhalten. Version 0.5.1 ist als Update von 0.5.0 für dasselbe Quality- beziehungsweise Balanced-Paket vorgesehen; der Importpfad muss noch in Bedrock geprüft werden. Danach die aktive Variante und den gewählten Stil kontrollieren.
 
 ## Galaxienhimmel in Version 0.4.0
 
@@ -52,16 +52,20 @@ Optionale Gameplay-Erweiterungen werden unabhängig im Repository
 [minecraft-addons](https://github.com/dr-dimitri/minecraft-addons) gepflegt.
 Dieses Repository enthält ausschließlich die Grafikpakete.
 
-## Bewegung und Wasser in Version 0.5.0
+## Bewegung und Wasser in Version 0.5.1
 
-Wasser erhält flache, weiche Wellen. Die zusätzlich gewünschte leichte
+Der bildbasierte Wellenparameter `depth` ist in allen acht Gewässerprofilen
+dreimal so hoch wie in 0.5.0. Das macht den Effekt kräftiger, ohne Frequenz,
+Tempo oder Form zu verändern; die sichtbare Höhe muss in Bedrock geprüft werden.
+Die zusätzlich gewünschte leichte
 Abdunklung wird über 10 % mehr CDOM und Chlorophyll angenähert; die sichtbare
 Wirkung hängt von Wassertiefe und Licht ab. Die bestätigte Umgebungshelligkeit
 bleibt unverändert.
 
-Baumblätter bewegen sich durch eine langsame Texturanimation in allen Stilen.
-Ihre Muster versetzen sich höchstens um einen Pixel; die Baumgeometrie bleibt
-fest. Halloween ergänzt transparente, langsam driftende Nebelschwaden. Nach
+Baumblätter bewegen sich durch eine fünfsekündige, gestaffelte Texturanimation
+in allen Stilen. Die Blattarten starten in versetzten Phasen; ihre Muster
+verschieben sich höchstens um einen Pixel, und die Baumgeometrie bleibt fest.
+Halloween ergänzt transparente, langsam driftende Nebelschwaden. Nach
 Auswahl eines anderen Stils und erneutem Öffnen der Welt ist dieser Effekt aus.
 Der Nebel verwendet eine ergänzte Spieler-Grafikdefinition; andere Pakete,
 die dieselbe Definition ersetzen, müssen auf Verträglichkeit geprüft werden.
@@ -70,7 +74,7 @@ Umsetzung, Grenzen und Sichttests: [Bewegungseffekte](docs/MOTION.md).
 ## Wasser und Realismus seit Version 0.3.0
 
 - Acht getrennte Gewässerprofile für See, klaren/kühlen See, Fluss, Küste, Meer, kaltes Meer, tropisches Meer und Sumpf. Die Zuordnung folgt dem Biom; sie erkennt keine Fließrichtung, Wassertiefe oder tatsächliche Gewässergröße.
-- Flache Wellenmuster auf dem Meer, noch flachere Kräuselung auf Seen und Sümpfen, schnellere Bewegung in Flüssen. Quality verwendet 16 Ebenen und eine feinere Abtastung als bisher. Die Drehung zwischen den Ebenen vermeidet ein regelmäßig wiederholtes Muster aus fünf Richtungen.
+- Weiche Wellenmuster mit in 0.5.1 verdreifachtem `depth`-Wert gegenüber 0.5.0; die Profile bleiben je nach Gewässer unterschiedlich. Quality verwendet 16 Ebenen und eine feinere Abtastung als Balanced. Die Drehung zwischen den Ebenen vermeidet ein regelmäßig wiederholtes Muster aus fünf Richtungen.
 - Die Wasserfarbe entsteht aus Bedrocks Lichtabsorption und Streuung mit unterschiedlichen Anteilen gelöster Stoffe und Schwebstoffe. Die zusätzliche Vanilla-Biomfärbung ist ausgeschaltet. Auch Halloween und Herbst verwenden diese Wasserwerte; ihre Stimmung entsteht über Licht, Himmel und Farbkorrektur.
 - Dezente, langsamer animierte Lichtmuster am Grund (Caustics). Einheitliche Werte verhindern nicht überblendbare Wechsel zwischen Gewässerprofilen.
 - Helligkeitskurven aus Mojangs tatsächlichem Standardprofil: Sonnenmaximum 100, Mondmaximum 0,4 und Umgebungslicht 0,02. Generic-Tonemapping, Gamma 2,2, Kontrast 1,15 und neutraler Gain 1,0 bilden die gemeinsame Grundlage. Diese Paketwerte werden nicht mit den abweichenden physikalischen Lux-Beispielen der Dokumentation gleichgesetzt.

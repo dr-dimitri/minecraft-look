@@ -11,7 +11,7 @@
     },
     "waves": {
       "enabled": true,
-      "depth": 0.045,
+      "depth": 0.135,
       "direction_increment": 137.507764,
       "frequency": 0.48,
       "frequency_scaling": 1.16,
