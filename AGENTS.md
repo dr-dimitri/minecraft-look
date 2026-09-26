@@ -52,6 +52,13 @@ Neue Arbeitsbranches verwenden `codex/` als Präfix. Externe Aktionen nur im
 Umfang des Nutzerauftrags ausführen; eine Releasevorbereitung ist keine
 Veröffentlichung. Bereits erteilte Autorisierung gilt weiter.
 
+Nach Fertigstellung einer beauftragten Änderung den Arbeitsbranch nach
+erfolgreichem Review und grüner CI in den Standardbranch mergen. Anschließend
+den vollständig gemergten Arbeitsbranch lokal und auf dem Remote löschen.
+Commit, Push, Merge und diese Branchbereinigung gehören zum Abschluss der
+Änderung; ein reiner Prüfauftrag bleibt ohne solche Änderungen. Standardbranch,
+ungemergte Arbeit und Branches anderer laufender Aufgaben nicht löschen.
+
 ## Ablauf einer beauftragten Bugfix- und Releaserunde
 
 1. Praxisrelevante Fehler anhand konkreter Auslöser suchen und reproduzieren;
@@ -70,9 +77,12 @@ Veröffentlichung. Bereits erteilte Autorisierung gilt weiter.
    Für die reale Abnahme `docs/TEST_WORLD.md` und die Szenenvorlage verwenden:
    exportierte Welt samt SHA-256, Kameras/Routen und Belege aller Varianten/Stile
    festhalten. Eine vorbereitete Vorlage ist keine erstellte oder geprüfte Welt.
-5. Bei beauftragtem Commit/Push die zusammengehörigen Änderungen committen und
-   pushen; anschließend die CI des exakten Commits abwarten und Fehler beheben.
-6. Bei beauftragtem Release den geprüften Commit taggen, CI-Artefakte übernehmen,
+5. Die zusammengehörigen Änderungen committen und pushen; anschließend die CI
+   des exakten Commits abwarten und Fehler beheben. Den geprüften Arbeitsbranch
+   in den Standardbranch mergen und danach lokal sowie auf dem Remote löschen.
+   Vor einem Release zusätzlich die CI des endgültigen Commits im Standardbranch
+   abwarten.
+6. Bei beauftragtem Release den geprüften Commit im Standardbranch taggen, CI-Artefakte übernehmen,
    Releasehinweise ergänzen und veröffentlichen. Ohne tatsächliche Bedrock-Abnahme
    nur als ausdrücklich gekennzeichnete Testversion/Pre-release veröffentlichen;
    keine stabile Engine- oder Leistungsfreigabe behaupten. Danach die

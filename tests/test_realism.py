@@ -79,6 +79,33 @@ class RealismTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Non-blendable water settings differ'):
             validate.validate_data(files, 'natural')
 
+    def test_every_style_keeps_the_reduced_brightness_and_relative_color_tint(self):
+        # Each overlay replaces the base file, so an unscaled theme gain would
+        # silently restore the excessive brightness as soon as a style is chosen.
+        expected_gain = {
+            'color_grading/natural.json': [.65, .65, .65],
+            'subpacks/natural/color_grading/natural.json': [.65, .65, .65],
+            'subpacks/mysterious/color_grading/natural.json': [.64025, .65, .65975],
+            'subpacks/autumn/color_grading/natural.json': [.65975, .65, .6435],
+            'subpacks/halloween/color_grading/natural.json': [.65975, .637, .65975],
+        }
+        exported = {name for name in self.files if Path(name).parent.name == 'color_grading'}
+        self.assertEqual(exported, set(expected_gain))
+        for name, gain in expected_gain.items():
+            with self.subTest(name=name):
+                body = self.files[name]['minecraft:color_grading_settings']
+                self.assertEqual(body['tone_mapping']['operator'], 'aces')
+                grading = body['color_grading']
+                # With no shadow/highlight overrides, midtones cover the image.
+                self.assertEqual(set(grading), {'midtones'})
+                midtones = grading['midtones']
+                self.assertEqual(midtones['gain'], gain)
+                self.assertEqual(midtones['gamma'], [2.2, 2.2, 2.2])
+                self.assertEqual(midtones['offset'], [0, 0, 0])
+                if name in ('color_grading/natural.json',
+                            'subpacks/natural/color_grading/natural.json'):
+                    self.assertEqual(midtones['contrast'], [1, 1, 1])
+
     def test_neutral_grading_and_non_emissive_materials(self):
         grading = self.base['color_grading/natural.json']['minecraft:color_grading_settings']
         self.assertEqual(grading['tone_mapping']['operator'], 'aces')

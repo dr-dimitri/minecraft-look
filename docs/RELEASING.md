@@ -42,6 +42,11 @@ Keine erfundenen `-rc`-Werte in den ganzzahligen Bedrock-Versionsarrays.
 5. Quellen, generierte Dateien, Tests und Dokumentation gemeinsam reviewen und
    committen. Releasequellen müssen vollständig in Git vorliegen. `dist/` gehört
    nicht in Git. Vor einem Tag muss `git status --porcelain` leer sein.
+6. Nach erfolgreichem Review und grüner CI des exakten Arbeitsbranch-Commits in
+   den Standardbranch mergen. Anschließend den vollständig gemergten Arbeitsbranch
+   lokal und auf dem Remote löschen; laufende oder ungemergte Arbeit erhalten.
+   Den lokalen Standardbranch aktualisieren. Ein Release wird erst nach grüner
+   CI des endgültigen Commits im Standardbranch getaggt.
 
 ## Lokale automatische Gates
 
@@ -114,7 +119,7 @@ neu gebaut. Prüfsummen werden mitgeliefert und vor dem Entwurf geprüft.
 Beispiel für die lokale Tagprüfung (Version an den Kandidaten anpassen):
 
 ```sh
-python3 scripts/check_release.py --tag v0.4.1
+python3 scripts/check_release.py --tag v0.4.2
 ```
 
 Vor dem Tag das Review und die grüne CI des vorgesehenen Commits prüfen. Ein

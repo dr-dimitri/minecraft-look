@@ -9,7 +9,7 @@ import night_sky
 ROOT = Path(__file__).resolve().parents[1]
 PACK = ROOT / 'pack'
 REF = ROOT / 'reference' / 'resource_pack'
-VERSION = [0, 4, 1]
+VERSION = [0, 4, 2]
 
 def write(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -80,7 +80,11 @@ def main():
         settings('atmospherics', f'air_{climate}', 'atmosphere', values, '1.21.40')
     settings('color_grading', 'natural', 'color_grading', {
         'color_grading': {
-            'midtones': {'contrast':[1.02]*3, 'gain':[1]*3, 'gamma':[2.2]*3, 'offset':[0]*3, 'saturation':[1.0]*3},
+            # With no separate shadow/highlight grading, midtones affect the
+            # whole image. Reduce the shared gain to tame excessive brightness;
+            # themes multiply their tint into it instead of resetting it.
+            # Keep Bedrock's standard output gamma (2.2).
+            'midtones': {'contrast':[1.0]*3, 'gain':[.65]*3, 'gamma':[2.2]*3, 'offset':[0]*3, 'saturation':[1.0]*3},
         },
         'tone_mapping': {'operator':'aces'},
     }, '1.21.90')

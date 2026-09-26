@@ -1,4 +1,4 @@
-# Realismus-Abstimmung · 0.3.0
+# Realismus-Abstimmung · 0.4.2
 
 Ziel ist ein glaubwürdiger natürlicher Look innerhalb von Bedrock Vibrant Visuals, mit Schwerpunkt Wasser. „Natürlich“ ist die neutrale Variante; die drei Themenstile bleiben bewusst künstlerisch gefärbt. Es gab keinen Zugriff auf den Windows-Renderer. Die folgenden Entscheidungen sind anhand der dokumentierten Parameter begründet, aber noch nicht durch Vergleichsbilder oder GPU-Messungen bestätigt.
 
@@ -29,7 +29,9 @@ Die Zuordnung ist biombasiert. Ein künstliches Schwimmbecken im Ozeanbiom erhä
 
 Die Sonne verwendet jetzt bis 110.000 Lux statt 115. Die alte Größenordnung passte nicht zur dokumentierten Einheit und reduzierte den Helligkeitsunterschied zu lokalen Lichtquellen stark. Die Kurve fällt über Abendlicht und Dämmerung bis auf null ab und schließt am Tageswechsel ohne Sprung. Der natürliche Mond erreicht 0,27 Lux; 0,02 Lux Umgebungslicht bleiben als niedriger Mindestwert erhalten. Diese Werte orientieren sich an der dokumentierten Pipeline und sind keine vollständige astronomische Simulation.
 
-ACES ist in allen Stilen derselbe Tonemapping-Operator. Neutrale Sättigung, geringe zusätzliche Kontrastanhebung und weniger blaues Mondlicht sollen Überfärbung reduzieren. Der höhere Sonnenwert verlangt einen Sichttest der automatischen Belichtung, besonders beim Wechsel von Höhle zu Tageslicht. Nächte sollen dunkel bleiben, ohne Hindernisse unlesbar zu machen; das lässt sich mit Zahlenprüfungen allein nicht bestätigen.
+ACES ist in allen Stilen derselbe Tonemapping-Operator. Nach der Rückmeldung einer zu hellen Darstellung wird der gemeinsame Farbkorrektur-Gain von 1,0 auf 0,65 gesenkt; „Natürlich“ verwendet neutralen Kontrast 1,0 statt 1,02. Ohne separate Schatten- oder Lichterkorrektur gilt dieser Gain für das ganze Bild. Die Themen multiplizieren ihre bisherigen RGB-Tönungen mit dem Basis-Gain, damit ein Stilwechsel die Helligkeitskorrektur nicht überschreibt. Quality und Balanced enthalten dieselben Farbkorrekturen.
+
+Gamma bleibt auf Bedrocks dokumentiertem Standard 2,2, Offset auf null. Sonnen-, Mond- und Umgebungslicht behalten ihre bisherigen Luxwerte. Der Gain reduziert das Signal vor dem Tonemapping um 35 Prozent; das ist keine Messung einer um 35 Prozent dunkleren Bildschirmdarstellung. Die Abstimmung muss bei Mittagssonne auf Schnee und Wasser, bei Nacht und beim Wechsel von Höhle zu Tageslicht in Bedrock verglichen werden. Insbesondere die automatische Belichtung und die Lesbarkeit dunkler Bereiche lassen sich mit Zahlenprüfungen allein nicht bestätigen.
 
 Die drei Metallblöcke erhalten binäre Metalligkeit 255 und unterschiedliche Rauheit. Diamant verwendet Metalligkeit 0. Alle vier haben Emission und Subsurface 0. Die originalen 16-Pixel-Farbtexturen bleiben enthalten; es gibt keine neu erzeugten Normalmaps oder hochauflösenden Oberflächendetails. Für einen fotorealistischen Gesamtlook fehlen daher weiterhin flächendeckende hochauflösende Materialien.
 
