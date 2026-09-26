@@ -11,7 +11,7 @@ import leaf_motion
 ROOT = Path(__file__).resolve().parents[1]
 PACK = ROOT / 'pack'
 REF = ROOT / 'reference' / 'resource_pack'
-VERSION = [0, 5, 0]
+VERSION = [0, 5, 1]
 
 def write(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)

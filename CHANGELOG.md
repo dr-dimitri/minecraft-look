@@ -2,6 +2,23 @@
 
 ## [Unreleased]
 
+## [0.5.1] - Testversion
+
+- Blattbewegung mit einem fünfsekündigen, ungleichmäßigen Windzyklus und
+  gestaffelten oberen/unteren Texturreihen statt des gleichförmigen
+  Vier-Frame-Pendelns. Unterschiedliche Blatttexturen beginnen in
+  reproduzierbar versetzten Phasen; Originalfarben und Transparenz bleiben
+  pro Frame erhalten. Die maximale Verschiebung bleibt ein Pixel.
+- Wasserwellen in allen acht Profilen auf die dreifache bisherige `depth`
+  abgestimmt. Geschwindigkeit, Frequenz, Wasserfarbe und die Wellenbudgets von
+  Quality und Balanced bleiben erhalten. Der Parameter verstärkt den
+  bildbasierten Welleneffekt; die sichtbare Höhe ist noch in Bedrock zu prüfen.
+
+Der Test für geänderte Wasserquellen bei gleicher Versionsnummer wurde an den
+neuen See-Wert angepasst und weist eine nicht greifende Teständerung jetzt ab.
+Die Blattbewegung, die sichtbare Wellenwirkung, der Update-Import von 0.5.0,
+Content-Log und FPS bleiben in Bedrock zu prüfen.
+
 ## [0.5.0] - Testversion
 
 - Bestätigte Helligkeit aus 0.4.3 durch eine unabhängige Referenzdatei und

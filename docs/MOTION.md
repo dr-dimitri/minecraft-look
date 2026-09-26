@@ -1,4 +1,4 @@
-# Bewegungseffekte · 0.5.0
+# Bewegungseffekte · 0.5.1
 
 Die Helligkeit aus 0.4.3 wurde vom Nutzer bestätigt und bleibt festgeschrieben.
 Neue Bewegungen und die gewünschte Wasserabdunklung sind getrennte Änderungen;
@@ -6,10 +6,13 @@ ihre tatsächliche Darstellung wurde noch nicht in Bedrock geprüft.
 
 ## Wasser
 
-Acht Wasserprofile verwenden flache, nahezu sinusförmige Wellen. Seen bewegen
-sich etwas deutlicher; Meereswellen werden flacher und weniger spitz. Quality
-behält 16 Wellenebenen, Balanced 8. Die Bewegung und optischen Werte sind
-ansonsten gleich, einschließlich aller vier Stile.
+Acht Wasserprofile verwenden weiche, nahezu sinusförmige Wellen. In 0.5.1 ist
+der `depth`-Wert jedes Profils genau dreimal so hoch wie in 0.5.0; er liegt
+jetzt zwischen 0,135 und 0,54. Frequenz, Geschwindigkeit und Wellenform sind
+unverändert. Quality behält 16 Wellenebenen, Balanced 8. Die übrige Bewegung
+und die Wasseroptik sind in beiden Varianten und allen vier Stilen gleich.
+`depth` verstärkt einen Bildeffekt und ist keine geometrische Wellenhöhe;
+wie stark die Wellen sichtbar wirken, bleibt in Bedrock zu prüfen.
 
 Für das Ziel „10 % dunkler“ hat der Nutzer eine Näherung über Lichtabsorption
 akzeptiert: CDOM und Chlorophyll werden mit 1,10 multipliziert. Sediment,
@@ -44,13 +47,17 @@ und Verträglichkeit müssen mit diesen Paketen geprüft werden.
 
 ## Blattbewegung
 
-`scripts/leaf_motion.py` erzeugt vier Frames pro Originaltextur: ruhend, leicht
-rechts, ruhend, leicht links. Nur mittlere Pixelreihen verschieben sich um
-höchstens einen Pixel. Die Engine blendet die Frames mit 20 Ticks pro Frame;
-der Zyklus dauert vier Sekunden. Es werden keine Farben aufgehellt oder neu
-eingemischt: jeder erzeugte Frame enthält dieselben RGBA-Pixel wie das Original.
-Die Einblendung zwischen Frames und die Transparenzkanten müssen im Spiel
-auf Flimmern und veränderte Deckung geprüft werden.
+`scripts/leaf_motion.py` erzeugt zehn Frames pro Originaltextur. Zwei mittlere
+Reihenbänder folgen einander zeitversetzt nach rechts, halten kurz inne und
+schwingen mit einem kürzeren Ausschlag nach links zurück. Äußere Reihen bleiben
+verankert. Jede Reihe verschiebt sich um höchstens einen Pixel. Die Engine
+blendet die Frames mit zehn Ticks pro Frame; der ungleichmäßige Zyklus dauert
+fünf Sekunden. Eine feste, vom Texturnamen abgeleitete Startphase verteilt die
+Bewegung zwischen Blattarten, während identische Texturen weiterhin dieselbe
+Phase haben. Es werden keine Farben aufgehellt oder neu eingemischt: jeder
+erzeugte Frame enthält dieselben RGBA-Pixel wie das Original. Die Einblendung
+zwischen Frames und die Transparenzkanten müssen im Spiel auf Flimmern und
+veränderte Deckung geprüft werden.
 
 Alle 28 transparenten/undurchsichtigen Blatttexturen des festgehaltenen Stands
 sind enthalten: Eiche, Fichte, Birke, Dschungel, Akazie, dunkle Eiche,
@@ -61,7 +68,7 @@ Vanilla-Atlas ersetzt. Die gemeinsame Animation gilt in allen Stilen und
 beiden Qualitätsstufen, auch für dort platzierte Blattblöcke in anderen Dimensionen.
 
 Das ist eine leichte Texturbewegung. Zweige und Baumkronen ändern ihre Geometrie
-nicht, und gleichartige Blätter haben keine individuelle Windphase. Biomtönung
+nicht, und einzelne Bäume erhalten keine individuelle Windphase. Biomtönung
 einschließlich Herbst und bestehende Materialparameter bleiben erhalten.
 PNG-/TGA-Referenzen stammen unverändert vom dokumentierten Mojang-Commit;
 der Generator benötigt nur Python-Standardbibliotheken.

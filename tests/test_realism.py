@@ -102,15 +102,20 @@ class RealismTests(unittest.TestCase):
             self.assertEqual(water['caustics'], {
                 'enabled': True, 'frame_length': .09, 'power': 1, 'scale': .5})
 
-    def test_all_water_profiles_use_gentle_moving_ripples(self):
+    def test_all_water_profiles_triple_wave_depth_without_sharpening_motion(self):
+        previous_depths = {
+            'lake': .100, 'clear_lake': .075, 'river': .080,
+            'coastal': .140, 'ocean': .180, 'cold_ocean': .160,
+            'tropical': .130, 'swamp': .045,
+        }
+        checked = 0
         for name, data in self.files.items():
             if Path(name).parent.name != 'water':
                 continue
             with self.subTest(name=name):
                 waves = data['minecraft:water_settings']['waves']
                 self.assertTrue(waves['enabled'])
-                self.assertGreaterEqual(waves['depth'], .04)
-                self.assertLessEqual(waves['depth'], .20)
+                self.assertEqual(waves['depth'], round(previous_depths[Path(name).stem] * 3, 6))
                 self.assertGreaterEqual(waves['speed'], .30)
                 self.assertLessEqual(waves['speed'], .70)
                 self.assertGreaterEqual(waves['shape'], 1)
@@ -118,6 +123,8 @@ class RealismTests(unittest.TestCase):
                 self.assertLessEqual(waves['frequency_scaling'], 1.16)
                 self.assertLessEqual(waves['speed_scaling'], 1.01)
                 self.assertLessEqual(waves['pull'], .10)
+                checked += 1
+        self.assertEqual(checked, 40)
 
     def test_incompatible_caustics_across_a_biome_boundary_are_rejected(self):
         files = copy.deepcopy(self.base)

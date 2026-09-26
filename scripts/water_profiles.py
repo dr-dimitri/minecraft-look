@@ -6,15 +6,17 @@ absorption/scattering model; the legacy biome color is deliberately not added.
 from copy import deepcopy
 
 # CDOM, chlorophyll, sediment, wave depth, base frequency, speed, crest shape.
+# Wave depths are three times the 0.5.0 settings; the other motion values retain
+# their distinct profiles so larger swells do not also race or sharpen.
 PROFILES = {
-    'lake':        (.080, .015, .035, .100, .50, .55, 1.10),
-    'clear_lake':  (.035, .008, .015, .075, .55, .45, 1.06),
-    'river':       (.350, .070, .350, .080, .65, .70, 1.12),
-    'coastal':     (.075, .035, .150, .140, .40, .60, 1.12),
-    'ocean':       (.035, .025, .025, .180, .30, .65, 1.14),
-    'cold_ocean':  (.025, .020, .025, .160, .32, .55, 1.12),
-    'tropical':   (.008, .007, .015, .130, .40, .58, 1.10),
-    'swamp':      (1.600, .450, 1.200, .045, .48, .30, 1.04),
+    'lake':        (.080, .015, .035, .300, .50, .55, 1.10),
+    'clear_lake':  (.035, .008, .015, .225, .55, .45, 1.06),
+    'river':       (.350, .070, .350, .240, .65, .70, 1.12),
+    'coastal':     (.075, .035, .150, .420, .40, .60, 1.12),
+    'ocean':       (.035, .025, .025, .540, .30, .65, 1.14),
+    'cold_ocean':  (.025, .020, .025, .480, .32, .55, 1.12),
+    'tropical':   (.008, .007, .015, .390, .40, .58, 1.10),
+    'swamp':      (1.600, .450, 1.200, .135, .48, .30, 1.04),
 }
 
 # Requested approximation of 10% darker water, not a screen-luminance scale.
@@ -41,7 +43,7 @@ def settings(name):
             'enabled': True, 'depth': depth,
             # An irrational turn avoids the repeated five-heading pattern of 72°.
             'direction_increment': 137.507764,
-            # Shallow, nearly sinusoidal ripples; fine octaves stay close in
+            # Broad, nearly sinusoidal waves; fine octaves stay close in
             # frequency and speed instead of forming sharp, fast small crests.
             'frequency': frequency, 'frequency_scaling': 1.16,
             'mix': .20, **QUALITY, 'pull': .10, 'shape': shape,

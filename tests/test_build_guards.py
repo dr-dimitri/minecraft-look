@@ -34,8 +34,10 @@ class BuildGuardTests(unittest.TestCase):
 
     def test_changed_sources_at_same_version_are_built_without_overwriting_local_outputs(self):
         source = self.root / 'scripts/water_profiles.py'
-        source.write_text(source.read_text().replace('.100, .50, .55, 1.10', '.100, .50, .56, 1.10')
-                          .replace("BALANCED = {'octaves': 8", "BALANCED = {'octaves': 7"))
+        original = source.read_text()
+        changed = original.replace('.300, .50, .55, 1.10', '.300, .50, .56, 1.10')
+        self.assertNotEqual(changed, original)
+        source.write_text(changed.replace("BALANCED = {'octaves': 8", "BALANCED = {'octaves': 7"))
         stale = self.root / 'pack/water/lake.json'
         before = stale.read_bytes()
         marker = self.root / 'pack/local-notes.md'
