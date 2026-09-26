@@ -122,7 +122,8 @@ def validate_data(files, style):
             orbital=body['directional_lights']['orbital']
             for light in ('sun','moon'):
                 frame(orbital[light]['color'],color)
-                frame(orbital[light]['illuminance'],lambda x:numeric(x,0,200000,'lux'))
+                ceiling = 100 if light == 'sun' else .4
+                frame(orbital[light]['illuminance'],lambda x:numeric(x,0,ceiling,'Mojang preset illuminance'))
             numeric(body['ambient']['illuminance'],0,5,'ambient')
             numeric(body['sky']['intensity'],.1,1,'sky')
         elif folder == 'atmospherics':
@@ -131,7 +132,10 @@ def validate_data(files, style):
             for field in ('rayleigh_strength','sun_mie_strength','moon_mie_strength','sun_glare_shape'):
                 frame(body[field],lambda x:numeric(x,0,100,'atmosphere'))
         elif folder == 'color_grading':
-            require(body['tone_mapping']['operator'] == 'aces','Tone map must be consistently ACES')
+            require(body['tone_mapping']['operator'] == 'generic','Tone map must use the Mojang Generic preset')
+            require(body['color_grading'].get('temperature') == {
+                'enabled': True, 'temperature': 6500, 'type': 'color_temperature'},
+                'Color temperature must retain the Mojang daylight preset')
             for field, low, high in [('contrast',0,4),('gain',0,10),('gamma',0,4),('offset',-1,1),('saturation',0,10)]:
                 channels=body['color_grading']['midtones'][field]
                 require(isinstance(channels,list) and len(channels)==3, f'Expected three {field} channels')

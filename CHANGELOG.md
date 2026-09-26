@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+## [0.4.3] - Testversion
+
+- Helligkeit an Mojangs festgehaltenes Standardprofil angepasst: Sonnenkurve
+  mit Maximum 100 statt 110.000, originale Mondkurve und Generic-Tonemapping.
+  Der pauschale Gain-Eingriff aus 0.4.2 entfällt zugunsten der originalen
+  Farbkorrekturwerte. Alle Stile und beide Varianten übernehmen die Grundlage;
+  Stil-Gain und Mondlicht übersteigen die Standardwerte nicht.
+- Die verwendeten Licht- und Farbprofilreferenzen sind mit Herkunft, Commit,
+  SHA-256 und Rechtehinweisen festgehalten. Prüfungen sichern die vollständigen
+  Kurven und verhindern eine erneute Anhebung auf 110.000.
+
+Die bisherige Gain-Absenkung in 0.4.2 reichte laut Nutzerrückmeldung nicht aus.
+Die neue Grundlage stammt aus den tatsächlichen Mojang-Paketdateien; die
+Bildwirkung und der Update-Import von 0.4.2 bleiben im Spiel zu prüfen.
+
 ## [0.4.2] - Testversion
 
 - Überhelle Darstellung: gemeinsamer Farbkorrektur-Gain von 1,0 auf 0,65

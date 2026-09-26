@@ -7,7 +7,7 @@ Eine selbst erzeugte Fantasy-Himmelsgrafik ergänzt nächtliche Galaxien und Neb
 - Sechs PNGs unter `textures/environment/overworld_cubemap/cubemap_0.png` bis `cubemap_5.png`, jeweils 1024 × 1024 RGB. Eine gemeinsame Vorlage verhindert sechs voneinander unabhängig gestaltete Himmelsflächen. Die Auflösung der Vorlage beträgt 1774 × 887; die Umrechnung erzeugt keine zusätzlichen nativen Details.
 - Die Dateien sind gemeinsam unter `textures/textures_list.json` registriert. Sie werden nicht in vier Unterpaketen vervielfacht.
 - `cubemaps/galaxy.json` nutzt ausschließlich dokumentierte Felder mit Schema `1.21.130` und der Kennung `lumen:galaxy`. Alle 83 vorhandenen Overworld-Biome verweisen darauf. Die Formatversion älterer Biomdateien wird auf mindestens `1.21.130` angehoben.
-- In 78 Biomen bleiben die Licht-/Wasserabstimmungen aus 0.3.0 bestehen. Pale Garden, Deep Dark, Lush Caves, Dripstone Caves und Sulfur Caves erhalten nur die Cubemap-Zuordnung; deren weitere Komponenten werden aus den festgehaltenen Originaldateien übernommen. Nether und Ende sind ausgenommen.
+- In 78 Biomen gelten die Licht-/Wasserabstimmungen aus `REALISM.md`, einschließlich der Helligkeitskorrektur ab 0.4.3. Pale Garden, Deep Dark, Lush Caves, Dripstone Caves und Sulfur Caves erhalten nur die Cubemap-Zuordnung; deren weitere Komponenten werden aus den festgehaltenen Originaldateien übernommen. Nether und Ende sind ausgenommen.
 - Alle vier Unterpakete enthalten eine eigene Helligkeitskurve und vollständige Biomdateien. Natürlich erreicht 0,8 Lux Cubemap-Umgebungslicht, Geheimnisvoll 0,96, Herbst 0,68 und Halloween 0,88. Das sind gestalterische Ausgangswerte, keine bestätigten Bildschirmhelligkeiten.
 
 ## Tagesverlauf

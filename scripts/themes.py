@@ -19,23 +19,23 @@ PALETTES = {
     'mysterious': {
         'sun': [171,211,231], 'moon': [143,209,232],
         'zenith': [76,116,155], 'horizon': [116,166,177],
-        'sun_strength': .82, 'moon_strength': 1.05, 'sky': .90,
+        'sun_strength': .82, 'moon_strength': 1.0, 'sky': .90,
         'ambient': '#B6D6E4', 'torch': '#EBCBAA', 'soul': '#81DEE5',
-        'contrast': 1.035, 'saturation': .94, 'gain': [.985,1.0,1.015],
+        'saturation': .94, 'gain': [.985,1.0,1.015],
     },
     'autumn': {
         'sun': [255,204,141], 'moon': [209,207,244],
         'zenith': [140,158,180], 'horizon': [240,190,139],
         'sun_strength': 1.0, 'moon_strength': 1.0, 'sky': .97,
         'ambient': '#EEE3D8', 'torch': '#FFD0A0', 'soul': '#9BD7E4',
-        'contrast': 1.025, 'saturation': 1.015, 'gain': [1.015,1.0,.99],
+        'saturation': 1.015, 'gain': [1.015,1.0,.99],
     },
     'halloween': {
         'sun': [244,166,104], 'moon': [183,153,236],
         'zenith': [94,79,128], 'horizon': [198,127,113],
-        'sun_strength': .72, 'moon_strength': 1.08, 'sky': .86,
+        'sun_strength': .72, 'moon_strength': 1.0, 'sky': .86,
         'ambient': '#D1C0E8', 'torch': '#FFB76D', 'soul': '#BC92F0',
-        'contrast': 1.045, 'saturation': .98, 'gain': [1.015,.98,1.015],
+        'saturation': .98, 'gain': [1.015,.98,1.015],
     },
 }
 
@@ -75,11 +75,11 @@ def transform(relative, original, style):
             air[key] = map_curve(air[key],lambda c:[round(min(255,max(0,v*(.65+.35*t/180)))) for v,t in zip(c,target)])
     elif folder == 'color_grading':
         grading = value['minecraft:color_grading_settings']['color_grading']['midtones']
-        grading['contrast'] = [p['contrast']]*3
-        grading['saturation'] = [p['saturation']]*3
-        # Palette gains are relative tints, preserving the shared brightness
-        # correction when switching away from the natural style.
-        grading['gain'] = [round(base*tint,5) for base,tint in zip(grading['gain'],p['gain'])]
+        grading['saturation'] = [round(base*p['saturation'],5) for base in grading['saturation']]
+        # Keep Mojang's contrast/gamma. Preserve each palette's relative tint
+        # without amplifying any channel above the standard gain.
+        peak = max(p['gain'])
+        grading['gain'] = [round(base*tint/peak,5) for base,tint in zip(grading['gain'],p['gain'])]
     # All themes share the same water optics. Lighting creates the mood without
     # adding an artificial algae/CDOM filter to clear lakes and tropical water.
     elif folder == 'local_lighting':

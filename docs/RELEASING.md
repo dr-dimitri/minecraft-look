@@ -119,7 +119,7 @@ neu gebaut. Prüfsummen werden mitgeliefert und vor dem Entwurf geprüft.
 Beispiel für die lokale Tagprüfung (Version an den Kandidaten anpassen):
 
 ```sh
-python3 scripts/check_release.py --tag v0.4.2
+python3 scripts/check_release.py --tag v0.4.3
 ```
 
 Vor dem Tag das Review und die grüne CI des vorgesehenen Commits prüfen. Ein

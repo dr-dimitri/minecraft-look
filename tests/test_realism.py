@@ -14,24 +14,30 @@ class RealismTests(unittest.TestCase):
         cls.files = validate.validate()
         cls.base = {n:v for n,v in cls.files.items() if not n.startswith('subpacks/')}
 
-    def test_daylight_uses_lux_and_night_retains_a_low_light_floor(self):
-        # Catch the previous 115-lux noon setting in every exported style.
-        for name, data in self.files.items():
-            if Path(name).parent.name != 'lighting':
-                continue
-            light = data['minecraft:lighting_settings']
-            orbital = light['directional_lights']['orbital']
-            noon = orbital['sun']['illuminance']['0']
-            midnight = orbital['moon']['illuminance']['0.5']
-            self.assertGreaterEqual(noon, 70000, name)
-            self.assertLessEqual(noon, 130000, name)
-            self.assertGreater(midnight, .05, name)
-            self.assertLessEqual(midnight, .5, name)
-            self.assertGreater(noon / midnight, 100000, name)
-            self.assertEqual(orbital['sun']['illuminance']['0.42'], 0, name)
-            self.assertGreater(light['ambient']['illuminance'], 0, name)
-            self.assertLessEqual(light['ambient']['illuminance'], .05, name)
-            self.assertGreaterEqual(light['sky']['intensity'], .8, name)
+    def test_lighting_tracks_the_pinned_mojang_preset_in_every_style(self):
+        reference = validate.load(validate.ROOT / 'reference/resource_pack/lighting/global.json')['minecraft:lighting_settings']
+        expected = reference['directional_lights']['orbital']
+        scales = {'natural': 1, 'mysterious': .82, 'autumn': 1, 'halloween': .72}
+        lights = {n:v for n,v in self.files.items() if Path(n).parent.name == 'lighting'}
+        self.assertEqual(len(lights), 20)
+        self.assertEqual(max(expected['sun']['illuminance'].values()), 100)
+        for name, data in lights.items():
+            with self.subTest(name=name):
+                style = name.split('/')[1] if name.startswith('subpacks/') else 'natural'
+                light = data['minecraft:lighting_settings']
+                orbital = light['directional_lights']['orbital']
+                for source in ('sun', 'moon'):
+                    scale = scales[style] if source == 'sun' else 1
+                    wanted = {float(t):round(v*scale,5) for t,v in expected[source]['illuminance'].items()}
+                    actual = {float(t):v for t,v in orbital[source]['illuminance'].items()}
+                    self.assertEqual(actual, wanted)
+                self.assertEqual(orbital['sun']['illuminance']['0.292'], 0)
+                self.assertEqual(orbital['sun']['illuminance']['0.709'], 0)
+                self.assertEqual(max(orbital['moon']['illuminance'].values()), .4)
+                self.assertEqual(orbital['orbital_offset_degrees'], expected['orbital_offset_degrees'])
+                self.assertEqual(light['ambient']['illuminance'], reference['ambient']['illuminance'])
+                self.assertEqual(light['emissive'], reference['emissive'])
+                self.assertLessEqual(light['sky']['intensity'], reference['sky']['intensity'])
 
     def test_exported_biomes_distinguish_shores_warm_and_lukewarm_water(self):
         expected = {
@@ -79,37 +85,48 @@ class RealismTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Non-blendable water settings differ'):
             validate.validate_data(files, 'natural')
 
-    def test_every_style_keeps_the_reduced_brightness_and_relative_color_tint(self):
-        # Each overlay replaces the base file, so an unscaled theme gain would
-        # silently restore the excessive brightness as soon as a style is chosen.
-        expected_gain = {
-            'color_grading/natural.json': [.65, .65, .65],
-            'subpacks/natural/color_grading/natural.json': [.65, .65, .65],
-            'subpacks/mysterious/color_grading/natural.json': [.64025, .65, .65975],
-            'subpacks/autumn/color_grading/natural.json': [.65975, .65, .6435],
-            'subpacks/halloween/color_grading/natural.json': [.65975, .637, .65975],
-        }
-        exported = {name for name in self.files if Path(name).parent.name == 'color_grading'}
-        self.assertEqual(exported, set(expected_gain))
-        for name, gain in expected_gain.items():
+    def test_all_styles_retain_mojang_grading_without_channel_amplification(self):
+        reference = validate.load(validate.ROOT / 'reference/resource_pack/color_grading/color_grading.json')['minecraft:color_grading_settings']
+        reference.pop('description')
+        tints = {'natural': [1,1,1], 'mysterious': [.985,1,1.015],
+                 'autumn': [1.015,1,.99], 'halloween': [1.015,.98,1.015]}
+        grades = {n:v for n,v in self.files.items() if Path(n).parent.name == 'color_grading'}
+        self.assertEqual(len(grades), 5)
+        for name, data in grades.items():
             with self.subTest(name=name):
-                body = self.files[name]['minecraft:color_grading_settings']
-                self.assertEqual(body['tone_mapping']['operator'], 'aces')
+                style = name.split('/')[1] if name.startswith('subpacks/') else 'natural'
+                body = data['minecraft:color_grading_settings']
+                self.assertEqual(body['tone_mapping'], reference['tone_mapping'])
                 grading = body['color_grading']
-                # With no shadow/highlight overrides, midtones cover the image.
-                self.assertEqual(set(grading), {'midtones'})
+                self.assertEqual(set(grading), set(reference['color_grading']))
+                self.assertEqual(grading['temperature'], reference['color_grading']['temperature'])
                 midtones = grading['midtones']
-                self.assertEqual(midtones['gain'], gain)
-                self.assertEqual(midtones['gamma'], [2.2, 2.2, 2.2])
-                self.assertEqual(midtones['offset'], [0, 0, 0])
-                if name in ('color_grading/natural.json',
-                            'subpacks/natural/color_grading/natural.json'):
-                    self.assertEqual(midtones['contrast'], [1, 1, 1])
+                for field in ('contrast', 'gamma', 'offset'):
+                    self.assertEqual(midtones[field], reference['color_grading']['midtones'][field])
+                gain = midtones['gain']
+                self.assertEqual(max(gain), 1)
+                for actual, tint in zip(gain, tints[style]):
+                    self.assertAlmostEqual(actual, tint/max(tints[style]), places=5)
+                if style == 'natural':
+                    self.assertEqual({k:v for k,v in body.items() if k != 'description'}, reference)
+
+    def test_validator_rejects_the_previous_110000_sunlight(self):
+        files = copy.deepcopy(self.base)
+        sun = files['lighting/light_temperate.json']['minecraft:lighting_settings']['directional_lights']['orbital']['sun']['illuminance']
+        sun['0'] = sun['1'] = 110000
+        with self.assertRaisesRegex(ValueError, 'Mojang preset illuminance'):
+            validate.validate_data(files, 'natural')
+
+    def test_validator_rejects_the_previous_aces_tone_mapping(self):
+        files = copy.deepcopy(self.base)
+        files['color_grading/natural.json']['minecraft:color_grading_settings']['tone_mapping']['operator'] = 'aces'
+        with self.assertRaisesRegex(ValueError, 'Mojang Generic'):
+            validate.validate_data(files, 'natural')
 
     def test_neutral_grading_and_non_emissive_materials(self):
         grading = self.base['color_grading/natural.json']['minecraft:color_grading_settings']
-        self.assertEqual(grading['tone_mapping']['operator'], 'aces')
-        self.assertEqual(grading['color_grading']['midtones']['saturation'], [1,1,1])
+        self.assertEqual(grading['tone_mapping']['operator'], 'generic')
+        self.assertEqual(grading['color_grading']['midtones']['saturation'], [1.05]*3)
         for block in ('iron_block', 'gold_block', 'copper_block', 'diamond_block'):
             material = self.base[f'textures/blocks/{block}.texture_set.json']['minecraft:texture_set']
             metal, emission, roughness, subsurface = material['metalness_emissive_roughness_subsurface']

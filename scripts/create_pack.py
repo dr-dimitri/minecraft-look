@@ -9,7 +9,7 @@ import night_sky
 ROOT = Path(__file__).resolve().parents[1]
 PACK = ROOT / 'pack'
 REF = ROOT / 'reference' / 'resource_pack'
-VERSION = [0, 4, 2]
+VERSION = [0, 4, 3]
 
 def write(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -22,7 +22,7 @@ def settings(folder, name, key, values, version='1.21.80'):
     })
 
 def curve(values):
-    return {str(k): v for k, v in values}
+    return {format(k, 'g'): v for k, v in values}
 
 def main():
     # Only generated pack output is replaced. Sources/reference files remain intact.
@@ -41,6 +41,12 @@ def main():
         'capabilities': ['pbr'],
         'subpacks': [{'folder_name': key, 'name': name, 'memory_tier': 0} for key,name in STYLES],
     })
+    # Use Mojang's actual pack preset instead of the physical-lux example from
+    # the docs. The previous 110,000 peak exceeded this preset by 1,100 times.
+    lighting = json.loads((REF / 'lighting/global.json').read_text(encoding='utf-8'))['minecraft:lighting_settings']
+    orbital = lighting['directional_lights']['orbital']
+    sun_curve = curve(sorted((float(t), v) for t, v in orbital['sun']['illuminance'].items()))
+    moon_curve = curve(sorted((float(t), v) for t, v in orbital['moon']['illuminance'].items()))
     for climate, noon, moon, sky in [
         ('temperate', [255, 250, 244], [221, 230, 242], 1.0),
         ('warm', [255, 247, 237], [226, 232, 242], 1.0),
@@ -50,17 +56,15 @@ def main():
         settings('lighting', f'light_{climate}', 'lighting', {
             'directional_lights': {'orbital': {
                 'sun': {
-                    # Lux, not an arbitrary brightness multiplier. Bedrock's
-                    # exposure/tone mapper handles the day/night dynamic range.
-                    'illuminance': curve([(0,110000),(.08,105000),(.18,52000),(.25,16000),(.30,900),(.35,10),(.42,0),(.58,0),(.65,10),(.70,900),(.75,16000),(.82,52000),(.92,105000),(1,110000)]),
+                    'illuminance': sun_curve,
                     'color': curve([(0,noon),(.15,noon),(.25,[255,197,151]),(.35,[255,173,143]),(.65,[255,173,143]),(.75,[255,208,166]),(.85,noon),(1,noon)]),
                 },
-                'moon': {'illuminance': curve([(0,0),(.20,0),(.30,.20),(.50,.27),(.70,.20),(.80,0),(1,0)]), 'color': moon},
-                'orbital_offset_degrees': 8.0,
-            }, 'flash': {'illuminance': 10, 'color': [228,93,255]}},
-            'emissive': {'desaturation': .08},
-            'ambient': {'illuminance': .02, 'color': '#F4F6FA'},
-            'sky': {'intensity': sky},
+                'moon': {'illuminance': moon_curve, 'color': moon},
+                'orbital_offset_degrees': orbital['orbital_offset_degrees'],
+            }, 'flash': lighting['directional_lights']['flash']},
+            'emissive': lighting['emissive'],
+            'ambient': lighting['ambient'],
+            'sky': {'intensity': lighting['sky']['intensity'] * sky},
         })
     for climate, zenith, horizon in [
         ('temperate',[105,143,188],[195,208,222]),
@@ -78,16 +82,9 @@ def main():
             'sky_horizon_color': curve([(0,horizon),(.17,horizon),(.25,[238,197,162]),(.34,[107,113,137]),(.42,[65,78,98]),(.60,[65,78,98]),(.68,[140,138,153]),(.75,[240,207,174]),(.83,horizon),(1,horizon)]),
         }
         settings('atmospherics', f'air_{climate}', 'atmosphere', values, '1.21.40')
-    settings('color_grading', 'natural', 'color_grading', {
-        'color_grading': {
-            # With no separate shadow/highlight grading, midtones affect the
-            # whole image. Reduce the shared gain to tame excessive brightness;
-            # themes multiply their tint into it instead of resetting it.
-            # Keep Bedrock's standard output gamma (2.2).
-            'midtones': {'contrast':[1.0]*3, 'gain':[.65]*3, 'gamma':[2.2]*3, 'offset':[0]*3, 'saturation':[1.0]*3},
-        },
-        'tone_mapping': {'operator':'aces'},
-    }, '1.21.90')
+    grading = json.loads((REF / 'color_grading/color_grading.json').read_text(encoding='utf-8'))['minecraft:color_grading_settings']
+    grading.pop('description')
+    settings('color_grading', 'natural', 'color_grading', grading, '1.21.90')
     for name in water_profiles.PROFILES:
         settings('water', name, 'water', water_profiles.settings(name), '1.26.0')
     settings('cubemaps', 'galaxy', 'cubemap', night_sky.settings(), '1.21.130')

@@ -51,7 +51,7 @@ class StyleTests(unittest.TestCase):
                 elif name.startswith('lighting/'):
                     light=selected[name]['minecraft:lighting_settings']
                     self.assertGreater(light['ambient']['illuminance'],0)
-                    self.assertGreater(light['directional_lights']['orbital']['moon']['illuminance']['0.5'],0)
+                    self.assertGreater(max(light['directional_lights']['orbital']['moon']['illuminance'].values()),0)
 
     def test_both_installers_contain_all_choices_and_balanced_covers_every_style(self):
         with tempfile.TemporaryDirectory() as d:
@@ -80,6 +80,11 @@ class StyleTests(unittest.TestCase):
                     for name in grading:
                         # Both installers are regenerated from the sources and
                         # must retain the brightness correction in every style.
+                        self.assertEqual(json.loads(z.read(name)),self.files[name])
+                    lighting=[n for n in z.namelist() if Path(n).parent.name=='lighting' and n.endswith('.json')]
+                    self.assertEqual(len(lighting),20)
+                    self.assertEqual(set(lighting),{n for n in self.files if Path(n).parent.name=='lighting'})
+                    for name in lighting:
                         self.assertEqual(json.loads(z.read(name)),self.files[name])
                     water=[n for n in z.namelist() if Path(n).parent.name=='water' and n.endswith('.json')]
                     self.assertEqual(len(water),40)
