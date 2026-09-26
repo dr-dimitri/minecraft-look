@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+- Ungültige Balanced-Wellenbudgets (z. B. `octaves = 0`, nicht endliche Werte
+  oder zusätzliche optische Parameter) brechen den Build ab, bevor ein neuer
+  Artefaktsatz bereitgestellt wird. Alle 40 Wasserdateien bleiben abgedeckt.
+- Veröffentlichte Paket- und Modul-UUIDs beider Varianten werden fest geprüft,
+  damit versehentliche Identitätswechsel den Updatepfad nicht beschädigen.
+- Der optionale Himmelsexport erzeugt und prüft zunächst alle sechs Flächen in
+  einem temporären Verzeichnis. FFmpeg-Fehler lassen die bisherigen Dateien
+  erhalten; Schreibfehler beim Übernehmen lösen eine Wiederherstellung aus.
+  Falls auch diese scheitert, bleiben Originaldateien zur Wiederherstellung
+  erhalten. Zusätzliche lokale PNG-Vorschauen gelangen nicht in die strikte
+  Prüfsummenliste der Himmelsressourcen.
+
 - Builds erzeugen Ressourcen aus einer temporären Quellkopie neu, auch bei
   unveränderter Version. Lokale generierte Dateien bleiben erhalten und werden
   nicht als Paketquelle verwendet; das Source-ZIP enthält frische Ausgaben.

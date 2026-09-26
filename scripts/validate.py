@@ -3,8 +3,8 @@ import hashlib
 import json
 import math
 import struct
-import uuid
 from pathlib import Path
+from pack_identity import check_pack_identity
 from themes import STYLES, AUTUMN_BIOMES
 from water_profiles import PROFILES
 from night_sky import SKY_ONLY_BIOMES, EXCLUDED_BIOMES, TEXTURES, FACE_SIZE
@@ -64,9 +64,8 @@ def validate():
     manifest = files['manifest.json']
     require(manifest['format_version'] == 2 and manifest['capabilities'] == ['pbr'], 'Invalid pack manifest')
     require(manifest['header']['min_engine_version'] == [1,26,50], 'Unexpected engine target')
+    check_pack_identity(manifest, 'Quality')
     require(manifest['header']['version'] == manifest['modules'][0]['version'], 'Versions differ')
-    ids = [manifest['header']['uuid'], manifest['modules'][0]['uuid']]
-    require(len(set(ids)) == 2 and all(uuid.UUID(x).version == 4 for x in ids), 'Invalid UUIDs')
 
     expected = [{'folder_name':key,'name':name,'memory_tier':0} for key,name in STYLES]
     require(manifest.get('subpacks') == expected, 'Missing, reordered or gated style choices')

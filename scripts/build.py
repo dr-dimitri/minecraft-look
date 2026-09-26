@@ -7,10 +7,11 @@ import sys
 import tempfile
 import zipfile
 from pathlib import Path
-from validate import require, ROOT
+from validate import require, numeric, ROOT
 from check_release import read_manifest, source_version
 from source_archive import source_entries
 from artifacts import publish_bundle
+from pack_identity import check_pack_identity
 
 def archive(path, entries):
     with zipfile.ZipFile(path,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as z:
@@ -34,6 +35,14 @@ def run_python(root, script):
 def stage_archives(root, dist):
     profiles = runpy.run_path(str(root / 'scripts/water_profiles.py'))
     quality, balanced = profiles['QUALITY'], profiles['BALANCED']
+    # Balanced is applied after validation of the generated Quality resources.
+    # Limit this override to its two budget fields and validate their actual
+    # values; equality with an invalid configured preset is not validation.
+    require(isinstance(balanced, dict) and set(balanced) == {'octaves', 'sampleWidth'},
+            'Balanced must override only octaves and sampleWidth')
+    require(type(balanced['octaves']) is int, 'Balanced octaves must be an integer')
+    numeric(balanced['octaves'], 1, 30, 'Balanced octaves')
+    numeric(balanced['sampleWidth'], .01, 1, 'Balanced sampleWidth')
     pack = root / 'pack'
     read_manifest(pack / 'manifest.json', source_version(root / 'scripts/create_pack.py'))
     source = source_entries(root)
@@ -60,6 +69,7 @@ def stage_archives(root, dist):
         with zipfile.ZipFile(target) as z:
             require('manifest.json' in z.namelist() and not any(n.startswith('pack/') for n in z.namelist()),
                     'Installer must contain its manifest at the archive root')
+            check_pack_identity(json.loads(z.read('manifest.json')), preset)
             expected=quality if preset=='Quality' else balanced
             require(all(all(json.loads(z.read(n))['minecraft:water_settings']['waves'][key]==value for key,value in expected.items()) for n in z.namelist() if Path(n).parent.name == 'water' and n.endswith('.json')),
                     f'Unexpected wave budget in {preset} installer')

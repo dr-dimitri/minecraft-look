@@ -26,6 +26,20 @@ Der verwendete Export ordnet die Flächen als vorne/rechts/hinten/links/oben/unt
 
 Der normale Build benötigt weiterhin nur Python. `scripts/convert_sky.py` ist eine optionale Neu-Exportierung mit FFmpeg; die geprüften sechs PNGs sind bereits Teil des Quellarchivs. Bildvorlagen, Flächen und Prüfsummen liegen gemeinsam in `assets/night_sky/`.
 
+Der Export schreibt zunächst in ein temporäres Verzeichnis und prüft alle sechs
+PNG-Dateien, bevor bestehende Flächen ersetzt werden. Bei einem FFmpeg-Abbruch
+bleiben die bisherigen Flächen und `source.json` erhalten. Bei Schreibfehlern
+während der Übernahme versucht das Skript, die Originaldateien zurückzusetzen.
+Schlägt auch diese Wiederherstellung fehl, meldet es den erhaltenen Sicherungspfad;
+die Originaldateien dort bewahren und nach Behebung des Dateisystemfehlers
+wiederherstellen. Das Verfahren garantiert keine atomare Mehrdateiänderung bei
+Stromausfall oder erzwungenem Prozessabbruch.
+
+Die Prüfsummenliste enthält ausschließlich die beiden benannten Vorlagen und
+sechs Würfelflächen. Zusätzliche PNG-Vorschauen bleiben als lokale Dateien erhalten
+und werden nicht in diese Liste aufgenommen. Nach einem erfolgreichen neuen
+Export Paketquellen regenerieren und die vollständigen Prüfungen ausführen.
+
 ## Quellen und Windows-Abnahme
 
 - [Microsoft: Cubemaps](https://learn.microsoft.com/en-us/minecraft/creator/documents/vibrantvisuals/cubemapcustomization?view=minecraft-bedrock-stable): Beleuchtung, Tageskurven, Streuung und Beschränkung auf die Overworld.
