@@ -1,0 +1,30 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.lumen.halloween_fog": {
+      "initial_state": "default",
+      "states": {
+        "default": {
+          "transitions": [
+            {
+              "drifting": "variable.lumen_halloween_fog"
+            }
+          ]
+        },
+        "drifting": {
+          "particle_effects": [
+            {
+              "effect": "lumen_halloween_fog",
+              "bind_to_actor": true
+            }
+          ],
+          "transitions": [
+            {
+              "default": "!variable.lumen_halloween_fog"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

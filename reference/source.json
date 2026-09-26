@@ -100,7 +100,37 @@
     "resource_pack/water/water.json": "089d6889e527acd443663925cd7a8ca98d0f9f806bdffe118bf30dfdfb29e8bf",
     "resource_pack/atmospherics/atmospherics.json": "cb720057e9484bd87c0a04ff561aab35f60992eb146541ff092d9416947ae43c",
     "resource_pack/color_grading/color_grading.json": "dbe56c22457054713334978c25a694d61ff446b557aaf78456f418184e2b0d5c",
-    "resource_pack/lighting/global.json": "5bd0e7a740f11bd92104dd959e366ce92fbb81af630e2468eeae4d0fb1b53efc"
+    "resource_pack/lighting/global.json": "5bd0e7a740f11bd92104dd959e366ce92fbb81af630e2468eeae4d0fb1b53efc",
+    "resource_pack/entity/player.entity.json": "7e520d872fc72be266223b3db2883c2818742a9a450330753a6de4d2ad813608",
+    "resource_pack/textures/blocks/azalea_leaves.tga": "4c087e041d10e734a2cf1cf7f323602473590e40c245e0d0c3b61390ad35f531",
+    "resource_pack/textures/blocks/azalea_leaves_flowers.tga": "bc90de8fccdf235c6ef762160ceb82bd227f72513233d4c6f6476bbeff8a04b2",
+    "resource_pack/textures/blocks/azalea_leaves_flowers_opaque.png": "fbcf0e2f4e028c610e2b5a7bbfc9b71c03bc3c71a175faebaa4af91c8addc3a5",
+    "resource_pack/textures/blocks/azalea_leaves_opaque.png": "100dd708710fdabe40a453004c876f2ccba3bf7809d6a4663dc9a50a181999ce",
+    "resource_pack/textures/blocks/cherry_leaves.tga": "036e14e4554d667abeb45a3eb5f5f757d8bfa7630b0fbbd2334818c6df32de72",
+    "resource_pack/textures/blocks/cherry_leaves_opaque.png": "4b904073d6c605e07bcddc3fb8bace129fd1dda6bce5dfd9d93f6fc0ba0311cc",
+    "resource_pack/textures/blocks/leaves_acacia.tga": "98053830f2531bd62442813cd957432bf159810c259aac70202d0a9160bc761d",
+    "resource_pack/textures/blocks/leaves_acacia_opaque.png": "cca611c522ccfd058ae848ff67f09c4971658fc897bea16a983cf1b9b31e2fdf",
+    "resource_pack/textures/blocks/leaves_big_oak.tga": "86413d9db13c23b828b0c3f6a54fe8e8cfae9dd82302a9d937d176e792e71a5c",
+    "resource_pack/textures/blocks/leaves_big_oak_opaque.png": "0733e8a056f6aa5c9790b48436cce659a271c99c8b7af5fa170e63307a2156d4",
+    "resource_pack/textures/blocks/leaves_birch.tga": "d79b0725872301d3a3d30fa51c2ca78614546439d04a9d3ac13a850d6e822a42",
+    "resource_pack/textures/blocks/leaves_birch_opaque.png": "bc13af1c4b13c0ee2f18308598c856b67fd2c490fc39b8a7db92745cfed105d4",
+    "resource_pack/textures/blocks/leaves_jungle.tga": "8159b3b447a127b9f0cb3d1ddc1f5ba1b5f91c1c34871e6a7fe4f1985884b2e1",
+    "resource_pack/textures/blocks/leaves_jungle_opaque.png": "a06ed3594cb8aac8220841ec01c9b74c6010debaf7ae5092566f2a59b06885c6",
+    "resource_pack/textures/blocks/leaves_oak.tga": "444769b026c99c7bc4713f178c5d59514cb899f8fda9f37db8be2d0a8d3aef62",
+    "resource_pack/textures/blocks/leaves_oak_opaque.png": "79c60c89c7a11784168707b94d8cfbfdfb2052e82b32a780220e6d4acc940573",
+    "resource_pack/textures/blocks/leaves_spruce.tga": "045ae543fd6ef52739e07339f0e2760854c777699a5ff97253e22410b66b8724",
+    "resource_pack/textures/blocks/leaves_spruce_opaque.png": "45dbe70a2c1dedb6c4497185316a50549858a0e640e08445f03b311af28d4f21",
+    "resource_pack/textures/blocks/mangrove_leaves.tga": "13ecd842c4e5490a4e5a868da1b08151f032a8c3577399f4869d54b13f0ec65c",
+    "resource_pack/textures/blocks/mangrove_leaves_opaque.png": "4b3b915ad525abddfca1230d1dff35da163ec1e91106fb2451ca9b1780582793",
+    "resource_pack/textures/blocks/orange_poplar_leaves.png": "65e60ddb6f4b317fb334931191ff5fcb271799fbc7f94a3d74cfa085c6c4d8ba",
+    "resource_pack/textures/blocks/orange_poplar_leaves_opaque.png": "74fe44e45e7c09b77f9f18db9634b2898f1081b2ad86264750adf9e9be0e2014",
+    "resource_pack/textures/blocks/pale_oak_leaves.tga": "b0d5933d166de44cd1d76fe1fbd4c62505ea9b9bd0c28667c15585c0da41bdc3",
+    "resource_pack/textures/blocks/pale_oak_leaves_opaque.png": "599c227b4b6a9353ae65a450603b0130e040a80a34dbb4a3e26d52a6b8f44a97",
+    "resource_pack/textures/blocks/red_poplar_leaves.png": "1ea9f2070d5582206b0edfe6552f8c153f3511416f50011939e2c7462e0ad62b",
+    "resource_pack/textures/blocks/red_poplar_leaves_opaque.png": "b1d881981016610efd7275c62e8e9f03d293fa487a116a54b9c0237f456105b5",
+    "resource_pack/textures/blocks/yellow_poplar_leaves.png": "f03180a3aec040c9103f3a3ddd40cbe73645cb433d5f50177c91cc8a02063f56",
+    "resource_pack/textures/blocks/yellow_poplar_leaves_opaque.png": "f7ecef65aff952486ab557d861f9fc523021eb98eeca32bc828b0266ff557848",
+    "resource_pack/textures/terrain_texture.json": "623b5a67fa1c1f50972db86607492b629c0b3ce9d7f886e1f569a4d820d91e95"
   },
   "supplemental_retrievals": [
     {
@@ -109,6 +139,48 @@
       "files": [
         "resource_pack/lighting/global.json",
         "resource_pack/color_grading/color_grading.json"
+      ]
+    },
+    {
+      "retrieved": "2026-09-26",
+      "commit": "46ba6ea985fb5a92d79a9419198f10dda14c199d",
+      "files": [
+        "resource_pack/entity/player.entity.json"
+      ]
+    },
+    {
+      "retrieved": "2026-09-26",
+      "commit": "46ba6ea985fb5a92d79a9419198f10dda14c199d",
+      "files": [
+        "resource_pack/textures/blocks/azalea_leaves.tga",
+        "resource_pack/textures/blocks/azalea_leaves_flowers.tga",
+        "resource_pack/textures/blocks/azalea_leaves_flowers_opaque.png",
+        "resource_pack/textures/blocks/azalea_leaves_opaque.png",
+        "resource_pack/textures/blocks/cherry_leaves.tga",
+        "resource_pack/textures/blocks/cherry_leaves_opaque.png",
+        "resource_pack/textures/blocks/leaves_acacia.tga",
+        "resource_pack/textures/blocks/leaves_acacia_opaque.png",
+        "resource_pack/textures/blocks/leaves_big_oak.tga",
+        "resource_pack/textures/blocks/leaves_big_oak_opaque.png",
+        "resource_pack/textures/blocks/leaves_birch.tga",
+        "resource_pack/textures/blocks/leaves_birch_opaque.png",
+        "resource_pack/textures/blocks/leaves_jungle.tga",
+        "resource_pack/textures/blocks/leaves_jungle_opaque.png",
+        "resource_pack/textures/blocks/leaves_oak.tga",
+        "resource_pack/textures/blocks/leaves_oak_opaque.png",
+        "resource_pack/textures/blocks/leaves_spruce.tga",
+        "resource_pack/textures/blocks/leaves_spruce_opaque.png",
+        "resource_pack/textures/blocks/mangrove_leaves.tga",
+        "resource_pack/textures/blocks/mangrove_leaves_opaque.png",
+        "resource_pack/textures/blocks/orange_poplar_leaves.png",
+        "resource_pack/textures/blocks/orange_poplar_leaves_opaque.png",
+        "resource_pack/textures/blocks/pale_oak_leaves.tga",
+        "resource_pack/textures/blocks/pale_oak_leaves_opaque.png",
+        "resource_pack/textures/blocks/red_poplar_leaves.png",
+        "resource_pack/textures/blocks/red_poplar_leaves_opaque.png",
+        "resource_pack/textures/blocks/yellow_poplar_leaves.png",
+        "resource_pack/textures/blocks/yellow_poplar_leaves_opaque.png",
+        "resource_pack/textures/terrain_texture.json"
       ]
     }
   ]

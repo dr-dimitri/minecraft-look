@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "provenance": {
+    "project": "Lumen WQHD",
+    "version": "0.4.3",
+    "commit": "1c4f667705279b54a9626c9c103311a13638dfd8",
+    "user_confirmation_date": "2026-09-26",
+    "scope": "User confirmed brightness; not a complete Bedrock compatibility or performance acceptance.",
+    "method": "SHA-256 of sorted compact ASCII JSON, grouped by effective resources of each selected style.",
+    "maintenance": "Never regenerate automatically. Changes require an explicit user request, reviewed differences and documented scope; requested settings are not a visual acceptance.",
+    "water_optics_adjustment": {
+      "date": "2026-09-26",
+      "authorization": "User requested 10% darker water and explicitly accepted an absorption-based approximation.",
+      "cdom_and_chlorophyll_scale": 1.1,
+      "unchanged": "Sediment, caustics and biome water color contribution.",
+      "scope": "Requested approximation, not visually confirmed and not a measured 10% luminance reduction."
+    }
+  },
+  "styles": {
+    "mysterious": {
+      "lighting": "b3cc555b6c5d8080b9f36008c260490beb1a86b89403957cf4ec7bc457bfedf4",
+      "color_grading": "699331bd2a2a838a1ada9fc826d090f7206c1ce1788504d048a24ac0e2ee1042",
+      "atmospherics": "32541be5508f71ce159932c3509c22408b00bbeacecf9e1248625869932a2d36",
+      "cubemaps": "0eff23313d29702e4c313fc31c06ed11764fc1cd00a7f8d540346ba32632664a",
+      "local_lighting": "71428aea3eed8e2ce69fcbd6d5ba7855928ac7cf3269fb46d2be3c9320358066",
+      "water_optics": "d1ef4add1ed95ac6615f748a89b48bcec7607b0460f833f12360e158ccc64d87",
+      "biome_bindings": "1b60c23a4298a7ef10c52bb3dbf81e1af8217247bd9937dacee4951e8b973283",
+      "materials": "d8ce19ce689dc9388ae59df05238b888415c5cee52f5445b31e754abcf41016a"
+    },
+    "autumn": {
+      "lighting": "d3eb9a7ca455d9b3dce31a813cd32a9f5bbf94db41f8914183a83973cb7bba53",
+      "color_grading": "a4393adafa2a604126440ab821929b7364506421fc3968ff782b739a98927edb",
+      "atmospherics": "162c18a4a9d38f587fe21ec8a712c4dc85b9e62694801610a5d9adb2ebdac7db",
+      "cubemaps": "e192a801574f136bbbb2c812efa6d8253b74f07705b35b05edd41ed0a15b55d0",
+      "local_lighting": "bb198b363c7ba07efb7ff0e342e25ea656b7b9567e1a3128d247d136f0573ae1",
+      "water_optics": "d1ef4add1ed95ac6615f748a89b48bcec7607b0460f833f12360e158ccc64d87",
+      "biome_bindings": "1b60c23a4298a7ef10c52bb3dbf81e1af8217247bd9937dacee4951e8b973283",
+      "materials": "d8ce19ce689dc9388ae59df05238b888415c5cee52f5445b31e754abcf41016a"
+    },
+    "halloween": {
+      "lighting": "2af1be3318d14bf551fd89b708d7205ca2e72f5f094cdf874bee23cb3d1ed688",
+      "color_grading": "158cb4794de9d4f5b554c57087d967548ca3b0ec7f5215050be2b2d166d459ab",
+      "atmospherics": "c8c82dea04db9d584afa405c8697ad5006f3e3aebef2b64a534dd4ddca14ac88",
+      "cubemaps": "fbc85258dedf3cc457ca4394e1b7646dbd9c403a87d537a415d9722158866e08",
+      "local_lighting": "f3216357003b3f912c22c2316e73fcd41ef7ed4c51970dfb089f6a7b37741937",
+      "water_optics": "d1ef4add1ed95ac6615f748a89b48bcec7607b0460f833f12360e158ccc64d87",
+      "biome_bindings": "1b60c23a4298a7ef10c52bb3dbf81e1af8217247bd9937dacee4951e8b973283",
+      "materials": "d8ce19ce689dc9388ae59df05238b888415c5cee52f5445b31e754abcf41016a"
+    },
+    "natural": {
+      "lighting": "e992e82a12a1d4f899087bee4063544dea61ba12f07ec0f7dcde692cf9854823",
+      "color_grading": "94da6b9fff38e03abf79cdeaf9aedfce2fe3ac15e0e601c8a2d10508313027cc",
+      "atmospherics": "fbbfbd9b046018530771272ec75a596a26bf75980f61b4fe489291faaeb60225",
+      "cubemaps": "3482204bac2422603ab5d510c55f350434f6fe441ccd5d703e6d911ccf240fb7",
+      "local_lighting": "2f54b914e555439e797d0c75eaab396e2331572c19fb4768958e43df10e15938",
+      "water_optics": "d1ef4add1ed95ac6615f748a89b48bcec7607b0460f833f12360e158ccc64d87",
+      "biome_bindings": "1b60c23a4298a7ef10c52bb3dbf81e1af8217247bd9937dacee4951e8b973283",
+      "materials": "d8ce19ce689dc9388ae59df05238b888415c5cee52f5445b31e754abcf41016a"
+    }
+  }
+}

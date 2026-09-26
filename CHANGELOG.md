@@ -2,6 +2,33 @@
 
 ## [Unreleased]
 
+## [0.5.0] - Testversion
+
+- Bestätigte Helligkeit aus 0.4.3 durch eine unabhängige Referenzdatei und
+  Build-/CI-Prüfungen gegen unbeabsichtigte Änderungen geschützt. Die
+  Projektvorgaben untersagen ein automatisches Nachziehen dieser Referenz.
+- Flache, weichere Wasserwellen mit leichter Bewegung in allen acht Profilen,
+  vier Stilen und beiden Qualitätsstufen. Die Wellenbudgets bleiben erhalten.
+- Auf Wunsch leicht dunkleres Wasser: CDOM und Chlorophyll um 10 % erhöht,
+  Sediment und Caustics unverändert. Die angenommene Abdunklung ist eine vom
+  Nutzer akzeptierte Näherung, keine gemessene Verringerung der Bildhelligkeit.
+- Halloween erhält langsam ziehende, weich ein-/ausblendende Nebelschwaden.
+  Rein lokale, beleuchtete Partikel in den 78 vollständig gestalteten
+  Overworld-Biomen; keine Emission unter Wasser, im Inventar, beim Schlafen,
+  als Zuschauer oder durch entfernte Spieler. Die ursprüngliche
+  Spieler-Grafikdefinition bleibt bis auf den Nebel-Auslöser erhalten.
+- Dezente Blattbewegung als viersekündige Texturanimation mit höchstens einem
+  Pixel Versatz. 28 transparente/undurchsichtige Blatttexturen einschließlich
+  der Pappeln, 40 aktuelle/ältere Atlaszuordnungen; Originalfarben und
+  Pixelanzahlen jeder Transparenzstufe bleiben pro Bild erhalten.
+- Neue Mojang-Referenzen mit Commit und SHA-256 festgehalten; portabler
+  PNG-/TGA-Import ohne zusätzliche Bibliotheken. Beide Installer und der
+  Neubau aus dem Quellarchiv enthalten die neuen Ressourcen.
+
+Die Helligkeit aus 0.4.3 wurde vom Nutzer bestätigt. Die neuen Bewegungen,
+Nebelpartikel, Wasserabdunklung, der Update-Import und FPS bleiben im Spiel
+zu prüfen. Blattbewegung verändert die Textur, nicht die Baumgeometrie.
+
 ## [0.4.3] - Testversion
 
 - Helligkeit an Mojangs festgehaltenes Standardprofil angepasst: Sonnenkurve

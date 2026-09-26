@@ -1,4 +1,4 @@
-# Realismus-Abstimmung · 0.4.3
+# Realismus-Abstimmung · 0.5.0
 
 Ziel ist ein glaubwürdiger natürlicher Look innerhalb von Bedrock Vibrant Visuals, mit Schwerpunkt Wasser. „Natürlich“ ist die neutrale Variante; die drei Themenstile bleiben bewusst künstlerisch gefärbt. Es gab keinen Zugriff auf den Windows-Renderer. Die folgenden Entscheidungen sind anhand der dokumentierten Parameter begründet, aber noch nicht durch Vergleichsbilder oder GPU-Messungen bestätigt.
 
@@ -11,15 +11,15 @@ Die Einstellungen stehen zentral in `scripts/water_profiles.py`. Die Werte für 
 | See | Gemäßigte Landbiome | Kleine, ruhige Wellen | Geringe Konzentrationen |
 | Klarer See | Kalte Landbiome, gefrorener Fluss | Sehr flache Kräuselung | Besonders geringe Konzentrationen |
 | Fluss | Flussbiom | Feinere, schnellere Bewegung | Mehr gelöste organische Stoffe und Sediment |
-| Küste | Strand, steiniger Strand, Pilzinsel-Ufer | Mittlere Wellen | Etwas mehr Sediment als offenes Meer |
-| Meer | Normales, tiefes und lauwarmes Meer | Größere Wellen mit feinen Anteilen | Geringe Konzentrationen |
+| Küste | Strand, steiniger Strand, Pilzinsel-Ufer | Flache Wellen | Etwas mehr Sediment als offenes Meer |
+| Meer | Normales, tiefes und lauwarmes Meer | Flache, etwas breitere Wellen | Geringe Konzentrationen |
 | Kaltes Meer | Kalte/gefrorene Meere, kalter Strand | Etwas ruhigere Meereswellen | Geringe Konzentrationen |
-| Tropisch | Warmes und tiefes warmes Meer | Mäßige Wellen | Sehr wenig gelöste Stoffe |
+| Tropisch | Warmes und tiefes warmes Meer | Flache weiche Wellen | Sehr wenig gelöste Stoffe |
 | Sumpf | Sumpf und Mangroven | Fast ruhige Oberfläche | Mehr CDOM, Chlorophyll und Sediment |
 
-Absorption und Streuung berechnet die Engine. `biome_water_color_contribution` ist null, damit sich die klassische blaue Biomfarbe nicht zusätzlich wie Farbstoff über das Ergebnis legt. Die Themen verändern weder Wasserzusammensetzung noch Wellen. Ihre Farben wirken über die Beleuchtung und das fertige Bild.
+Für die ausdrücklich gewünschte leichte Abdunklung werden seit 0.5.0 die ursprünglichen CDOM- und Chlorophyllwerte mit 1,10 multipliziert. Sediment und Caustics bleiben gleich. Der Nutzer hat diese Näherung für das Ziel „10 % dunkler“ akzeptiert; 10 % mehr Konzentration sind keine gemessenen 10 % weniger Bildhelligkeit. Absorption und Streuung berechnet die Engine. `biome_water_color_contribution` ist null, damit sich die klassische blaue Biomfarbe nicht zusätzlich wie Farbstoff über das Ergebnis legt. Die Themen verändern weder Wasserzusammensetzung noch Wellen. Ihre Farben wirken über die Beleuchtung und das fertige Bild.
 
-Die Wellen enthalten mehrere Frequenzen und Bewegungsraten. Pro Ebene dreht die Richtung um etwa 137,51 Grad; dadurch wiederholen sich die Richtungen nicht bereits nach fünf Ebenen wie zuvor. Wellenhöhe, Grundfrequenz, Geschwindigkeit und Schärfe unterscheiden sich je Gewässer. Quality verwendet 16 Ebenen mit `sampleWidth=0.055`, Balanced 8 mit `sampleWidth=0.11`. Mehr Ebenen erhöhen den möglichen Detailgrad, garantieren aber weder bessere Bildwirkung noch eine bestimmte Bildrate. Feine Details müssen in Bewegung auf Flimmern geprüft werden.
+Seit 0.5.0 sind flache, weichere Wellen abgestimmt: Tiefe 0,045–0,18, Geschwindigkeit 0,30–0,70, Form 1,04–1,14, geringer Zug 0,10. Die Frequenz steigt pro Ebene um Faktor 1,16, die Geschwindigkeit nur um 1,01. Die Wellen enthalten mehrere Frequenzen und Bewegungsraten. Pro Ebene dreht die Richtung um etwa 137,51 Grad; dadurch wiederholen sich die Richtungen nicht bereits nach fünf Ebenen wie zuvor. Wellenhöhe, Grundfrequenz, Geschwindigkeit und Schärfe unterscheiden sich je Gewässer. Quality verwendet 16 Ebenen mit `sampleWidth=0.055`, Balanced 8 mit `sampleWidth=0.11`. Mehr Ebenen erhöhen den möglichen Detailgrad, garantieren aber weder bessere Bildwirkung noch eine bestimmte Bildrate. Feine Details müssen in Bewegung auf Flimmern geprüft werden.
 
 Für Caustics wird die eingebaute Animation mit 64 Bildern verwendet: 0,09 Sekunden pro Bild, Stärke 1, Skalierung 0,5. Das sind dezente Ausgangswerte; ein gleichzeitiger Vergleich bei Sonnenlicht ist nötig. Alle Biome verwenden dieselben Caustics, weil Bedrock diese Parameter nicht weich überblenden kann.
 
@@ -47,3 +47,15 @@ Die drei Metallblöcke erhalten binäre Metalligkeit 255 und unterschiedliche Ra
 - [Materialdefinitionen](https://learn.microsoft.com/en-us/minecraft/creator/reference/content/texturesetsreference/texturesetsconcepts/texturesetsintroduction?view=minecraft-bedrock-stable): binäre Metalligkeit, Rauheit, MERS und Texturreferenzen.
 
 Die Abnahme erfolgt mit den Szenen in `BENCHMARK.md`. Vor einem solchen Test darf das Paket weder als fotorealistisch nachgewiesen noch als auf 80 FPS optimiert bezeichnet werden.
+
+## Geschützte Helligkeit
+
+Am 26.09.2026 bestätigte der Nutzer die Helligkeit von 0.4.3.
+`reference/approved_brightness.json` speichert davon unabhängige Fingerprints
+für alle vier Stile. Validator, Build und CI stoppen auch bei kleinen, sonst
+gültigen Änderungen an Licht, Farbkorrektur, Atmosphäre, Cubemap, lokalen
+Lichtern, Materialdefinitionen und Grafikzuordnungen. Die Wasserabdunklung ist
+als später ausdrücklich beauftragte Ausnahme dokumentiert; Wellenparameter
+sind unabhängig. Keine automatische Regeneration dieser Referenz.
+Die Rückmeldung ist keine vollständige Engine- oder Leistungsabnahme.
+Die Blatt- und Nebelbewegung ist in [MOTION.md](MOTION.md) beschrieben.

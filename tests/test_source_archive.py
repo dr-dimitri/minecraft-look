@@ -23,6 +23,8 @@ class SourceArchiveTests(unittest.TestCase):
     def test_project_sources_and_skills_survive_without_git(self):
         names = ['LICENSE', '.gitattributes', '.gitignore', 'README.md', 'scripts/build.py',
                  'tests/test_package.py', 'pack/manifest.json', 'reference/source.json',
+                 'scripts/brightness_lock.py', 'reference/approved_brightness.json',
+                 'reference/resource_pack/textures/blocks/leaves_oak.tga',
                  'assets/night_sky/source.json', 'docs/benchmark.csv',
                  '.agents/skills/lumen-release/SKILL.md', '.github/workflows/build.yml']
         for name in names:

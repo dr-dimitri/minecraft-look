@@ -10,6 +10,9 @@ from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 import build
 import validate
+from brightness_lock import check_approved_brightness
+import halloween_fog
+import leaf_motion
 
 class StyleTests(unittest.TestCase):
     @classmethod
@@ -68,6 +71,24 @@ class StyleTests(unittest.TestCase):
             for variant,count,sample_width in [('Quality',16,.055),('Balanced',8,.11)]:
                 with zipfile.ZipFile(output/f'Lumen-WQHD-{variant}-{version}.mcpack') as z:
                     manifest=json.loads(z.read('manifest.json'))
+                    resources = {n: json.loads(z.read(n)) for n in z.namelist() if n.endswith('.json')}
+                    for name in halloween_fog.JSON_PATHS:
+                        path = 'subpacks/halloween/' + name
+                        self.assertEqual(resources[path], self.files[path])
+                    texture = 'subpacks/halloween/' + halloween_fog.TEXTURE + '.png'
+                    self.assertEqual(z.read(texture), (validate.PACK / texture).read_bytes())
+                    self.assertEqual(resources[leaf_motion.FLIPBOOK], self.files[leaf_motion.FLIPBOOK])
+                    leaves = [n for n in z.namelist() if n.startswith(leaf_motion.PREFIX) and n.endswith('.png')]
+                    self.assertEqual(len(leaves), 28)
+                    for name in leaves:
+                        self.assertEqual(z.read(name), (validate.PACK / name).read_bytes())
+                    base = {n: v for n, v in resources.items() if not n.startswith('subpacks/')}
+                    check_approved_brightness(base, 'natural', root)
+                    for choice in manifest['subpacks']:
+                        style = choice['folder_name']
+                        prefix = f'subpacks/{style}/'
+                        selected = {**base, **{n[len(prefix):]: v for n, v in resources.items() if n.startswith(prefix)}}
+                        check_approved_brightness(selected, style, root)
                     pack_ids.append(manifest['header']['uuid'])
                     self.assertEqual(manifest['subpacks'],self.base['manifest.json']['subpacks'])
                     for face in range(6):

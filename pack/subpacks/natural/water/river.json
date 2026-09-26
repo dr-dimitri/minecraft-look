@@ -5,23 +5,23 @@
       "identifier": "lumen:river"
     },
     "particle_concentrations": {
-      "cdom": 0.35,
-      "chlorophyll": 0.07,
+      "cdom": 0.385,
+      "chlorophyll": 0.077,
       "suspended_sediment": 0.35
     },
     "waves": {
       "enabled": true,
-      "depth": 0.095,
+      "depth": 0.08,
       "direction_increment": 137.507764,
-      "frequency": 0.56,
-      "frequency_scaling": 1.22,
+      "frequency": 0.65,
+      "frequency_scaling": 1.16,
       "mix": 0.2,
       "octaves": 16,
       "sampleWidth": 0.055,
-      "pull": 0.22,
-      "shape": 1.22,
-      "speed": 0.72,
-      "speed_scaling": 1.025
+      "pull": 0.1,
+      "shape": 1.12,
+      "speed": 0.7,
+      "speed_scaling": 1.01
     },
     "caustics": {
       "enabled": true,

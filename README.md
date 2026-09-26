@@ -2,11 +2,11 @@
 
 Ein Grafikpaket für Minecraft Bedrock unter Windows mit vier auswählbaren Stilen: **Natürlich, Geheimnisvoll, Herbst und Halloween**. Acht Gewässerprofile, Tageslicht auf Basis von Mojangs Standardprofil und dessen Helligkeitsdarstellung bilden die Grundlage. Für den möglichst natürlichen Look **Quality + Natürlich** wählen. Quality ist die vorgesehene erste Wahl für die RX 9060 XT mit 16 GB Grafikspeicher bei 2560 × 1440.
 
-**Version 0.4.3 ist eine technisch geprüfte Testversion.** Rund 80 FPS sind das Entwicklungsziel, kein Messergebnis. Hier stand weder Minecraft für Windows noch die Zielgrafikkarte für eine Sicht- oder Leistungsprüfung zur Verfügung. Bildwirkung, Import, Stilauswahl und Leistung müssen deshalb noch im Spiel geprüft werden. Die neue Abstimmung zielt auf mehr Realismus; fotorealistische Ergebnisse sind noch nicht visuell bestätigt. Es gibt keine automatische GPU-Erkennung oder automatische FPS-Regelung.
+**Version 0.5.0 ist eine technisch geprüfte Testversion.** Rund 80 FPS sind das Entwicklungsziel, kein Messergebnis. Hier stand weder Minecraft für Windows noch die Zielgrafikkarte für eine Sicht- oder Leistungsprüfung zur Verfügung. Bildwirkung, Import, Stilauswahl und Leistung müssen deshalb noch im Spiel geprüft werden. Die neue Abstimmung zielt auf mehr Realismus; fotorealistische Ergebnisse sind noch nicht visuell bestätigt. Es gibt keine automatische GPU-Erkennung oder automatische FPS-Regelung.
 
 ## Installieren
 
-1. `Lumen-WQHD-Quality-0.4.3.mcpack` aus dem vom Build ausgegebenen Artefaktverzeichnis beziehungsweise einem GitHub-Release herunterladen. „Source code.zip“ bei GitHub ist der Quellcode, nicht das Installationspaket.
+1. `Lumen-WQHD-Quality-0.5.0.mcpack` aus dem vom Build ausgegebenen Artefaktverzeichnis beziehungsweise einem GitHub-Release herunterladen. „Source code.zip“ bei GitHub ist der Quellcode, nicht das Installationspaket.
 2. Unter Windows die `.mcpack` doppelklicken. Falls nötig „Öffnen mit → Minecraft für Windows“ wählen und den erfolgreichen Import abwarten.
 3. In der gewünschten Welt unter **Ressourcenpakete → Meine Pakete** Lumen WQHD aktivieren. Zum ersten Test nur dieses zusätzliche Grafikpaket verwenden.
 4. Im Hauptmenü unter **Einstellungen → Video → Grafikmodus** **Vibrant Visuals** auswählen. Ein Ressourcenpaket schaltet den Grafikmodus nicht selbst um.
@@ -28,15 +28,15 @@ Die Auswahl verwendet Bedrocks eingebaute Unterpakete (Subpacks). Die genaue Men
 | Natürlich | Standard für Realismus: neutrale Tagesfarben, warme Abendsonne, dezentes Mondlicht und natürliche Wasseroptik. |
 | Geheimnisvoll | Kühlere Blau- und Türkistöne, gedämpftes Sonnenlicht und kühlere Himmelsfarben. |
 | Herbst | Goldene Lichtfarben und orange-gelbe Laubtönungen in 15 ausgewählten Oberflächenbiomen. |
-| Halloween | Orangefarbenes Sonnen- und Laternenlicht, violette Mond- und Himmelsfarben, gedämpftes Tageslicht. |
+| Halloween | Orangefarbenes Sonnen- und Laternenlicht, violette Mond- und Himmelsfarben, gedämpftes Tageslicht und langsam ziehende Nebelschwaden. |
 
 Herbst färbt Laub, das seine Farbe vom Biom erhält. Blätter mit fester Texturfarbe können ihre ursprüngliche Farbe behalten; es ist kein Austausch sämtlicher Baumtexturen. Nachtlicht bleibt in den Einstellungen bei allen Stilen vorhanden; die tatsächliche Sichtbarkeit muss im Spiel geprüft werden. Die Auswahl verändert keine Spielregeln, Wetterabläufe oder Kreaturen und wechselt nicht automatisch mit dem Kalender.
 
-Version 0.4.3 verwendet Mojangs festgehaltenes Standardprofil als Helligkeitsgrundlage: Sonnenmaximum 100 statt 110.000, originale Mondkurve und Generic-Tonemapping. Die vorherige pauschale Gain-Absenkung entfällt. Natürlich übernimmt die originale Farbkorrektur; alle Themen behalten diese Kontrast-/Gamma-Grundlage und ihre Farbtönungen ohne zusätzliche Kanalverstärkung. Quality und Balanced enthalten dieselbe Korrektur. Die tatsächliche Helligkeit muss noch in Bedrock verglichen werden; Herkunft und Werte stehen in `docs/REALISM.md`.
+Version 0.4.3 verwendet Mojangs festgehaltenes Standardprofil als Helligkeitsgrundlage: Sonnenmaximum 100 statt 110.000, originale Mondkurve und Generic-Tonemapping. Die vorherige pauschale Gain-Absenkung entfällt. Natürlich übernimmt die originale Farbkorrektur; alle Themen behalten diese Kontrast-/Gamma-Grundlage und ihre Farbtönungen ohne zusätzliche Kanalverstärkung. Quality und Balanced enthalten dieselbe Korrektur. Der Nutzer hat diese Helligkeit bestätigt; seit 0.5.0 schützen Build und CI die festgehaltenen Werte. Die neuen Effekte benötigen eigene Sichttests. Herkunft und Werte stehen in `docs/REALISM.md`.
 
 Die Auswahl hat bewusst keine Hardware-Sperren: Alle Stile verwenden dieselbe Wellenqualität und dieselbe Speicherstufe. „Natürlich“ steht als Standard am Ende der Manifestliste. Ein Stilwechsel ersetzt die vollständigen betroffenen Ressourcen, einschließlich der Biomfarben, damit zum Beispiel Herbstfarben beim Zurückwechseln nicht im Paket bestehen bleiben. Weitere Stile lassen sich in `scripts/themes.py` ergänzen.
 
-Bei einem Update bleiben die Paket-UUIDs erhalten. Version 0.4.3 ist als Update von 0.4.2 für dasselbe Quality- beziehungsweise Balanced-Paket vorgesehen; der Importpfad muss noch in Bedrock geprüft werden. Danach die aktive Variante und den gewählten Stil kontrollieren.
+Bei einem Update bleiben die Paket-UUIDs erhalten. Version 0.5.0 ist als Update von 0.4.3 für dasselbe Quality- beziehungsweise Balanced-Paket vorgesehen; der Importpfad muss noch in Bedrock geprüft werden. Danach die aktive Variante und den gewählten Stil kontrollieren.
 
 ## Galaxienhimmel in Version 0.4.0
 
@@ -44,7 +44,7 @@ Bei Nacht ergänzt eine eigene Himmelsgrafik ein Sternenband, zwei entfernte Gal
 
 Die Beleuchtung der Himmelsgrafik steigt nach Sonnenuntergang allmählich an und fällt vor dem Tag wieder auf null. Direkte Sonnen- und Himmelsbeleuchtung der Grafik sind deaktiviert, atmosphärische Streuung und Nebel bleiben berücksichtigt. Das soll tagsüber den natürlichen Himmel erhalten. **Ob der Renderer dieses Zusammenspiel wie vorgesehen zeigt, muss unter Windows geprüft werden; das Einblenden ist bisher nur auf Ebene der Datenkurven getestet.**
 
-Die Himmelstexturen werden einmal für alle Stile mitgeliefert: sechs Flächen à 1024 × 1024 Pixel, technisch aus einer generierten 1774 × 887-Pixel-Panoramagrafik umgerechnet. Das erhöht nicht die native Detailauflösung. Es gibt keine zusätzlichen Spielobjekte, Partikel oder Gameplay-Skripte. Die grafische Vorlage ist eine Texturvorschau, kein Screenshot aus Minecraft.
+Die Himmelstexturen werden einmal für alle Stile mitgeliefert: sechs Flächen à 1024 × 1024 Pixel, technisch aus einer generierten 1774 × 887-Pixel-Panoramagrafik umgerechnet. Das erhöht nicht die native Detailauflösung. Für den Himmel gibt es keine zusätzlichen Spielobjekte, Partikel oder Gameplay-Skripte. Die grafische Vorlage ist eine Texturvorschau, kein Screenshot aus Minecraft.
 
 In 78 Oberflächenbiomen gelten die bisherigen vollständigen Grafikabstimmungen. Fünf weitere Overworld-Biome erhalten ausschließlich die Zuordnung zur Himmelsbeleuchtung, damit dort keine durchgehend helle Standard-Skybox greift. Nether und Ende werden nicht umgestellt. Details, Quellen und Sichtprüfung: `docs/NIGHT_SKY.md`; Erzeugungsprompts: `assets/night_sky/PROMPT.md`.
 
@@ -52,10 +52,25 @@ Optionale Gameplay-Erweiterungen werden unabhängig im Repository
 [minecraft-addons](https://github.com/dr-dimitri/minecraft-addons) gepflegt.
 Dieses Repository enthält ausschließlich die Grafikpakete.
 
+## Bewegung und Wasser in Version 0.5.0
+
+Wasser erhält flache, weiche Wellen. Die zusätzlich gewünschte leichte
+Abdunklung wird über 10 % mehr CDOM und Chlorophyll angenähert; die sichtbare
+Wirkung hängt von Wassertiefe und Licht ab. Die bestätigte Umgebungshelligkeit
+bleibt unverändert.
+
+Baumblätter bewegen sich durch eine langsame Texturanimation in allen Stilen.
+Ihre Muster versetzen sich höchstens um einen Pixel; die Baumgeometrie bleibt
+fest. Halloween ergänzt transparente, langsam driftende Nebelschwaden. Nach
+Auswahl eines anderen Stils und erneutem Öffnen der Welt ist dieser Effekt aus.
+Der Nebel verwendet eine ergänzte Spieler-Grafikdefinition; andere Pakete,
+die dieselbe Definition ersetzen, müssen auf Verträglichkeit geprüft werden.
+Umsetzung, Grenzen und Sichttests: [Bewegungseffekte](docs/MOTION.md).
+
 ## Wasser und Realismus seit Version 0.3.0
 
 - Acht getrennte Gewässerprofile für See, klaren/kühlen See, Fluss, Küste, Meer, kaltes Meer, tropisches Meer und Sumpf. Die Zuordnung folgt dem Biom; sie erkennt keine Fließrichtung, Wassertiefe oder tatsächliche Gewässergröße.
-- Größere, langsamere Wellenmuster auf dem Meer, flachere Kräuselung auf Seen und Sümpfen, schnellere Bewegung in Flüssen. Quality verwendet 16 Ebenen und eine feinere Abtastung als bisher. Die Drehung zwischen den Ebenen vermeidet ein regelmäßig wiederholtes Muster aus fünf Richtungen.
+- Flache Wellenmuster auf dem Meer, noch flachere Kräuselung auf Seen und Sümpfen, schnellere Bewegung in Flüssen. Quality verwendet 16 Ebenen und eine feinere Abtastung als bisher. Die Drehung zwischen den Ebenen vermeidet ein regelmäßig wiederholtes Muster aus fünf Richtungen.
 - Die Wasserfarbe entsteht aus Bedrocks Lichtabsorption und Streuung mit unterschiedlichen Anteilen gelöster Stoffe und Schwebstoffe. Die zusätzliche Vanilla-Biomfärbung ist ausgeschaltet. Auch Halloween und Herbst verwenden diese Wasserwerte; ihre Stimmung entsteht über Licht, Himmel und Farbkorrektur.
 - Dezente, langsamer animierte Lichtmuster am Grund (Caustics). Einheitliche Werte verhindern nicht überblendbare Wechsel zwischen Gewässerprofilen.
 - Helligkeitskurven aus Mojangs tatsächlichem Standardprofil: Sonnenmaximum 100, Mondmaximum 0,4 und Umgebungslicht 0,02. Generic-Tonemapping, Gamma 2,2, Kontrast 1,15 und neutraler Gain 1,0 bilden die gemeinsame Grundlage. Diese Paketwerte werden nicht mit den abweichenden physikalischen Lux-Beispielen der Dokumentation gleichgesetzt.

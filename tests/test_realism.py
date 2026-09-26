@@ -79,6 +79,46 @@ class RealismTests(unittest.TestCase):
                 self.assertEqual(body['biome_water_color_contribution'], 0, name)
                 self.assertEqual(body, waters[Path(name).stem], name)
 
+    def test_water_darkening_only_increases_absorbing_constituents(self):
+        # Independent 0.4.3 values; a 10% concentration increase is an authored
+        # approximation, never proof of a 10% reduction in rendered luminance.
+        approved = {
+            'lake': (.080, .015, .035), 'clear_lake': (.035, .008, .015),
+            'river': (.350, .070, .350), 'coastal': (.075, .035, .150),
+            'ocean': (.035, .025, .025), 'cold_ocean': (.025, .020, .025),
+            'tropical': (.008, .007, .015), 'swamp': (1.600, .450, 1.200),
+        }
+        for name, data in self.files.items():
+            if Path(name).parent.name != 'water':
+                continue
+            cdom, chlorophyll, sediment = approved[Path(name).stem]
+            water = data['minecraft:water_settings']
+            self.assertEqual(water['particle_concentrations'], {
+                'cdom': round(cdom * 1.1, 6),
+                'chlorophyll': round(chlorophyll * 1.1, 6),
+                'suspended_sediment': sediment,
+            }, name)
+            self.assertEqual(water['biome_water_color_contribution'], 0)
+            self.assertEqual(water['caustics'], {
+                'enabled': True, 'frame_length': .09, 'power': 1, 'scale': .5})
+
+    def test_all_water_profiles_use_gentle_moving_ripples(self):
+        for name, data in self.files.items():
+            if Path(name).parent.name != 'water':
+                continue
+            with self.subTest(name=name):
+                waves = data['minecraft:water_settings']['waves']
+                self.assertTrue(waves['enabled'])
+                self.assertGreaterEqual(waves['depth'], .04)
+                self.assertLessEqual(waves['depth'], .20)
+                self.assertGreaterEqual(waves['speed'], .30)
+                self.assertLessEqual(waves['speed'], .70)
+                self.assertGreaterEqual(waves['shape'], 1)
+                self.assertLessEqual(waves['shape'], 1.15)
+                self.assertLessEqual(waves['frequency_scaling'], 1.16)
+                self.assertLessEqual(waves['speed_scaling'], 1.01)
+                self.assertLessEqual(waves['pull'], .10)
+
     def test_incompatible_caustics_across_a_biome_boundary_are_rejected(self):
         files = copy.deepcopy(self.base)
         files['water/coastal.json']['minecraft:water_settings']['caustics']['scale'] = .9

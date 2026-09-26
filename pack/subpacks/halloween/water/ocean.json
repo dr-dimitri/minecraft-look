@@ -5,23 +5,23 @@
       "identifier": "lumen:ocean"
     },
     "particle_concentrations": {
-      "cdom": 0.035,
-      "chlorophyll": 0.025,
+      "cdom": 0.0385,
+      "chlorophyll": 0.0275,
       "suspended_sediment": 0.025
     },
     "waves": {
       "enabled": true,
-      "depth": 0.34,
+      "depth": 0.18,
       "direction_increment": 137.507764,
-      "frequency": 0.19,
-      "frequency_scaling": 1.22,
+      "frequency": 0.3,
+      "frequency_scaling": 1.16,
       "mix": 0.2,
       "octaves": 16,
       "sampleWidth": 0.055,
-      "pull": 0.22,
-      "shape": 1.35,
-      "speed": 0.56,
-      "speed_scaling": 1.025
+      "pull": 0.1,
+      "shape": 1.14,
+      "speed": 0.65,
+      "speed_scaling": 1.01
     },
     "caustics": {
       "enabled": true,
